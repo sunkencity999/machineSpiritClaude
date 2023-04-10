@@ -1,0 +1,49 @@
+<div class="container">
+  <div class="row">
+    <div class="col">
+
+      <main role="main" class="inner cover">
+        <h2 class="cover-heading"><center>Query the Machine Spirit</center></h2>
+        <p class="lead"><center>machineSpirit Claude is an interface with Anthropic's safety-focused Artificial Intelligence "Claude". This intelligence is meant to be conversational and useful for general knowledge and utility. It can teach concepts and provide understanding. A great tutor and aid for learning. </center></p>
+    
+        <hr class="mt-2 mb-2">
+      <div class="row">
+        <div class="col">
+        
+          <% @conversation_history.each do |message| %>
+          <% p message %>
+          <p><strong><%= message[:role] %>:</strong> <%= message[:text] %></p>
+          <% end %>
+        
+        </div>
+      </div>
+      </main>
+  <div class="d-flex justify-content-around">
+    <center><%= link_to "Download Latest Response as PDF", download_latest_response_chat_index_path, class: "btn btn-dark" %></center>
+  </div>
+      <div class="d-flex justify-content-around">
+
+      <%= form_with url: '/chat/ask', method: :post, local: true do |f| %>
+        <%= f.label :user_input, 'Ask the Machine Spirit a question:' %>
+        <%= f.text_field :user_input, required: true %>
+        <%= f.submit 'Submit', class: 'btn btn-sml btn-success' %>
+      <% end %>
+      </div>
+
+       <div class="d-flex justify-content-around">
+       <%= button_tag "Voice to Text", type: "button", class: "btn btn-lrg btn-dark", id: "voice-to-text" %>
+
+
+      <%= form_with url: delete_thread_path, method: :post, local: true do %>
+        <%= submit_tag "Delete Thread", class: "btn btn-lrg btn-danger" %>
+      <% end %>
+       </div>
+     <div class="progress" id="progress-bar" style="display: none;">
+  <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%"></div>
+</div>
+
+      
+    </div>
+  </div>
+</div>
+
