@@ -39,7 +39,7 @@ gem 'activerecord-session_store'
 # for using bootstrap
 gem 'sassc-rails'
 
-gem 'bootstrap', '~> 4.6.0'
+gem 'bootstrap-sass'
 gem 'jquery-rails'
 gem 'popper_js'
 
