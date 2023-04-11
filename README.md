@@ -6,6 +6,10 @@ machineSpiritClaude is a web-based conversational assistant interface designed t
 
 ![machineSpiritClaude Conversational Assistant](screenshot.png)
 
+## Live Web Application
+
+[machineSpiritClaude](https://machinespiritclaude.com)
+
 ## Features
 
 machineSpiritClaude offers a variety of features to ensure a seamless and engaging user experience:
@@ -16,6 +20,8 @@ machineSpiritClaude offers a variety of features to ensure a seamless and engagi
 - Clear conversation history: Users can quickly and easily clear the entire conversation history with a single click, ensuring a fresh start for new queries.
 
 ## Getting Started
+
+If you would like to run a local version of the application, please follow the below steps.
 
 To get started with Claude, follow these steps:
 
