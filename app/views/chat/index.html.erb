@@ -10,7 +10,7 @@
       <main role="main" class="inner cover">
         <h2 class="cover-heading"><center>Query the Machine Spirit</center></h2>
         <p class="lead"><center>machineSpiritClaude is an interface with Anthropic's safety-focused Artificial Intelligence "Claude". This intelligence is meant to be conversational and useful for general knowledge and utility. It can teach concepts and provide understanding. A great tutor and aid for learning. </center></p>
-    
+
         <hr class="mt-2 mb-2">
         <div class="row">
           <div class="col" id="responsebox">
@@ -19,30 +19,37 @@
             <% end %>
           </div>
         </div>
+         <% if @assistant_response.present? %>
+  
+        <div class="download-button text-center mt-3">
+          <%= link_to 'Download Latest Response as PDF',download_latest_response_chat_index_path , class: 'btn btn-primary' %>
+        <% end %>      
+        </div>
 
         <%= form_with url: { controller: "chat", action: "ask" }, method: :post, id: "ask_form" do |f| %>
-  <div class="form-inline">
-    <%= f.label :text, "Query the AI:" %>
-    <%= f.text_field :text, class: "form-control input-width", autofocus: true %>
-    <%= f.hidden_field :save_conversation, value: user_signed_in? ? "1" : "0" %>
-    <%= f.submit "Submit", class: "btn btn-primary mt-3" %>
-  </div>
-<% end %>
+          <div class="form-inline">
+            <%= f.label :text, "Query the AI:" %>
+            <%= f.text_field :text, class: "form-control input-width", autofocus: true %>
+            <%= f.hidden_field :save_conversation, value: user_signed_in? ? "1" : "0" %>
+            <%= f.submit "Submit", class: "btn btn-primary mt-3" %>
+          </div>
+        <% end %>
 <p>&nbsp;</p>
 <div class="row">
-  <div class="col-md-4 text-center">
+  <div class="col-md-3 text-center">
     <%= button_tag "Voice to Text", type: "button", class: "btn btn-outline-success", id: "voice-to-text" %>
   </div>
-  <div class="col-md-4 text-center">
+  <div class="col-md-3 text-center">
     <%= form_with url: delete_thread_path, method: :post, local: true do %>
       <%= submit_tag "Delete Thread", class: "btn btn-outline-danger" %>
     <% end %>
   </div>
   <% if user_signed_in? %>
-    <div class="col-md-4 text-center">
+    <div class="col-md-3 text-center">
       <button id="toggle-conversations" class="btn btn-outline-primary">View Previous Conversations</button>
     </div>
-
+    
+  <% end %>
 </div>
 
         <div class="table-responsive">
@@ -51,6 +58,8 @@
               <tr>
                 <th>Prompt</th>
                 <th>Response</th>
+                <th>Date</th>
+
                 <th>Date</th>
                 <th>Delete</th>
               </tr>
@@ -69,15 +78,15 @@
             </tbody>
         </table>
         </div>
-        <% else %>
+        
           <div class="col" style="padding-top: 1.5em">
             <p>Please <%= link_to 'Sign in', new_user_session_path %> or <%= link_to 'Sign up', new_user_registration_path %> to view your conversations. This will be a premium feature after the beta.</p>
           </div>
-        <% end %>
-      </div>
+        
+    </div>
     </div>
   </div>
-
+</div>
 
 
 <script>
