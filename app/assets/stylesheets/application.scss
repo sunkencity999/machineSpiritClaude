@@ -211,8 +211,13 @@ th, td {
   .inner.cover {
     padding: 0;
   }
-}
+
 .topText {
     padding-top: 5em;
     }
 
+.table-responsive {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+}
