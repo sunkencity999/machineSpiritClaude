@@ -61,3 +61,21 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 });
 
+document.addEventListener("DOMContentLoaded", function () {
+  const voiceToTextButton = document.getElementById("voice-to-text");
+
+  if (voiceToTextButton) {
+    const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+    const recognition = new SpeechRecognition();
+
+    recognition.onresult = function (event) {
+      const transcript = event.results[0][0].transcript;
+      document.querySelector("#ask_form input[name='text']").value = transcript;
+    };
+
+    voiceToTextButton.addEventListener("click", function () {
+      recognition.start();
+    });
+  }
+});
+
