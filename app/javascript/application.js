@@ -70,7 +70,8 @@ document.addEventListener("DOMContentLoaded", function () {
 
     recognition.onresult = function (event) {
       const transcript = event.results[0][0].transcript;
-      document.querySelector("#ask_form .form-control").value = transcript;
+      const textField = document.getElementById("query-input");
+      textField.value = transcript;
     };
 
     voiceToTextButton.addEventListener("click", function () {

@@ -30,7 +30,7 @@
         <%= form_with url: { controller: "chat", action: "ask" }, method: :post, id: "ask_form" do |f| %>
   <div class="form-inline">
     <%= f.label :text, "Query the AI:" %>
-    <%= f.text_field :text, class: "form-control input-width", autofocus: true %>
+    <%= f.text_field :text, class: "form-control input-width", autofocus: true, id: "query-input" %>
     <%= f.hidden_field :save_conversation, value: user_signed_in? ? "1" : "0" %>
     <%= f.submit "Submit", class: "btn btn-primary mt-3" %>
   </div>
