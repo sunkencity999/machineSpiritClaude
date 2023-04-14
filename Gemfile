@@ -42,10 +42,14 @@ gem 'sassc-rails'
 gem 'bootstrap-sass'
 gem 'jquery-rails'
 gem 'popper_js'
+gem 'rails-ujs'
 
 # enable functionality to download PDF's
 gem 'wicked_pdf'
 gem 'wkhtmltopdf-binary'
+
+# enable user/login functionality
+gem 'devise'
 
 gem 'dotenv-rails', groups: [:development, :test]
 

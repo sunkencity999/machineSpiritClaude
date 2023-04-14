@@ -1,49 +1,99 @@
 <div class="container">
-  <div class="row">
-    <div class="col">
+  <% if user_signed_in? %>
+    <div class="sign-out-button">
+      <%= link_to 'Sign out', destroy_user_session_path, method: :delete, class: 'btn btn-primary' %>
+    </div>
+  <% end %>
 
+  <div class="row topText">
+    <div class="col">
       <main role="main" class="inner cover">
         <h2 class="cover-heading"><center>Query the Machine Spirit</center></h2>
         <p class="lead"><center>machineSpiritClaude is an interface with Anthropic's safety-focused Artificial Intelligence "Claude". This intelligence is meant to be conversational and useful for general knowledge and utility. It can teach concepts and provide understanding. A great tutor and aid for learning. </center></p>
     
         <hr class="mt-2 mb-2">
-      <div class="row">
-        <div class="col">
-        
-          <% @conversation_history.each do |message| %>
-          <% p message %>
-          <p><strong><%= message[:role] %>:</strong> <%= message[:text] %></p>
-          <% end %>
-        
+        <div class="row">
+          <div class="col" id="responsebox">
+            <% @conversation_history.each do |message| %>
+              <p><strong><%= message[:role] %>:</strong> <%= message[:text] %></p>
+            <% end %>
+          </div>
         </div>
-      </div>
-      </main>
-  <div class="d-flex justify-content-around">
-    <center><%= link_to "Download Latest Response as PDF", download_latest_response_chat_index_path, class: "btn btn-dark" %></center>
+
+        <%= form_with url: { controller: "chat", action: "ask" }, method: :post, id: "ask_form" do |f| %>
+  <div class="form-inline">
+    <%= f.label :text, "Query the AI:" %>
+    <%= f.text_field :text, class: "form-control input-width", autofocus: true %>
+    <%= f.hidden_field :save_conversation, value: user_signed_in? ? "1" : "0" %>
+    <%= f.submit "Submit", class: "btn btn-primary mt-3" %>
   </div>
-      <div class="d-flex justify-content-around">
+<% end %>
+<p>&nbsp;</p>
+<div class="row">
+  <div class="col-md-4 text-center">
+    <%= button_tag "Voice to Text", type: "button", class: "btn btn-outline-success", id: "voice-to-text" %>
+  </div>
+  <div class="col-md-4 text-center">
+    <%= form_with url: delete_thread_path, method: :post, local: true do %>
+      <%= submit_tag "Delete Thread", class: "btn btn-outline-danger" %>
+    <% end %>
+  </div>
+  <% if user_signed_in? %>
+    <div class="col-md-4 text-center">
+      <button id="toggle-conversations" class="btn btn-outline-primary">View Previous Conversations</button>
+    </div>
 
-      <%= form_with url: '/chat/ask', method: :post, local: true do |f| %>
-        <%= f.label :user_input, 'Ask the Machine Spirit a question:' %>
-        <%= f.text_field :user_input, required: true %>
-        <%= f.submit 'Submit', class: 'btn btn-sml btn-success' %>
-      <% end %>
-      </div>
-
-       <div class="d-flex justify-content-around" style="padding-top: 10px;">
-       <%= button_tag "Voice to Text", type: "button", class: "btn btn-lrg btn-dark", id: "voice-to-text" %>
-
-
-      <%= form_with url: delete_thread_path, method: :post, local: true do %>
-        <%= submit_tag "Delete Thread", class: "btn btn-lrg btn-danger" %>
-      <% end %>
-       </div>
-     <div class="progress" id="progress-bar" style="display: none;">
-  <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%"></div>
 </div>
 
-      
+
+        <table class="table" id="conversations-table">
+            <thead>
+              <tr>
+                <th>Prompt</th>
+                <th>Response</th>
+                <th>Date</th>
+                <th>Delete</th>
+              </tr>
+            </thead>
+            <tbody>
+              <% @conversations.each do |conversation| %>
+                <tr>
+                  <td><%= conversation.prompt %></td>
+                  <td><%= conversation.response %></td>
+                  <td><%= conversation.created_at %></td>
+                  <td>
+                    <%= button_to 'Delete', conversation_path(conversation), method: :delete, data: { confirm: 'Are you sure you want to delete this conversation?' }, class: 'btn btn-danger' %>
+                  </td>
+                </tr>
+              <% end %>
+            </tbody>
+          </table>
+        <% else %>
+          <div class="col" style="padding-top: 1.5em">
+            <p>Please <%= link_to 'Sign in', new_user_session_path %> or <%= link_to 'Sign up', new_user_registration_path %> to view your conversations. This will be a premium feature after the beta.</p>
+          </div>
+        <% end %>
+      </div>
     </div>
   </div>
-</div>
+
+
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    const conversationsTable = document.getElementById('conversations-table');
+    const toggleConversationsButton = document.getElementById('toggle-conversations');
+
+    // Initially hide the table
+    conversationsTable.style.display = 'none';
+
+    toggleConversationsButton.addEventListener('click', function() {
+      if (conversationsTable.style.display === 'none') {
+        conversationsTable.style.display = 'table';
+      } else {
+        conversationsTable.style.display = 'none';
+      }
+    });
+  });
+</script>
 

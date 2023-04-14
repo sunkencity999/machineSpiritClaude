@@ -3,5 +3,7 @@
 //= link_tree ../../javascript .js
 //= link_tree ../../../vendor/javascript .js
 //= link bootstrap.min.css
+//= link jquery.js
+//= link jquery_ujs.js
 
 

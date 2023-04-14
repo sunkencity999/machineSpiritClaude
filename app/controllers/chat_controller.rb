@@ -1,47 +1,61 @@
 class ChatController < ApplicationController
-  
-  def index
-  session[:conversation_history] ||= []
-  @conversation_history = session[:conversation_history].reject { |msg| msg[:role].nil? || msg[:text].nil? }
-  @assistant_response = session[:assistant_response]
-end
+ before_action :authenticate_user!, only: [:create]
 
+  def index
+    @conversations = current_user.conversations if user_signed_in?
+    @conversation = Conversation.new 
+    session[:conversation_history] ||= []
+    @conversation_history = session[:conversation_history].reject { |msg| msg[:role].nil? || msg[:text].nil? }
+    @assistant_response = session[:assistant_response]  
+
+  end
+  
   def ask
   session[:conversation_history] ||= []
-  user_input = params[:user_input]
+  user_input = params[:text]
+  save_conversation = params[:save_conversation] == "1"
 
-  conversation_history = session[:conversation_history].map { |msg| "#{msg[:role]}: #{msg[:text]}" }.join("\n")
+  if user_input.present?
+    # Add the user's message to the history
+    session[:conversation_history] << { role: "user", text: user_input }
 
-  api_key = ENV['MY_API_KEY']
-  prompt = params[:user_input]
+    # Get the AI response
+    conversation_history = session[:conversation_history].map { |msg| "#{msg[:role]}: #{msg[:text]}" }.join("\n")
+    api_key = ENV['MY_API_KEY']
+    response = HTTParty.post('https://api.anthropic.com/v1/complete',
+                              headers: {
+                                'x-api-key' => api_key,
+                                'content-type' => 'application/json'
+                              },
+                              body: {
+                                prompt: conversation_history + "\n\nHuman: #{user_input}\n\nAssistant: ",
+                                model: "claude-v1",
+                                max_tokens_to_sample: 300,
+                                stop_sequences: ["\n\nHuman:"]
+                              }.to_json)
 
-  response = HTTParty.post('https://api.anthropic.com/v1/complete',
-                            headers: {
-                              'x-api-key' => api_key,
-                              'content-type' => 'application/json'
-                            },
-                            body: {
-                              prompt: conversation_history + "\n\nHuman: #{prompt}\n\nAssistant: ",
-                              model: "claude-v1",
-                              max_tokens_to_sample: 300,
-                              stop_sequences: ["\n\nHuman:"]
-                            }.to_json)
+    if response['completion']
+      assistant_response = response['completion']
+      session[:conversation_history] << { role: 'Assistant', text: assistant_response }
+      session[:assistant_response] = assistant_response
+    else
+      session[:assistant_response] = "Error: Couldn't get a response from Claude. Please try again later."
+    end
 
-  if response['completion']
-    assistant_response = response['completion']
-    p "Before adding messages:"
-    p session[:conversation_history]
-    session[:conversation_history] << { role: 'User', text: prompt }
-    session[:conversation_history] << { role: 'Assistant', text: assistant_response }
-    p "After adding messages:"
-    p session[:conversation_history]
-  else
-    assistant_response = "Error: Couldn't get a response from Claude. Please try again later."
+    # Save the conversation if the user is signed in and save_conversation is true
+    if user_signed_in? && save_conversation
+      @conversation = current_user.conversations.build(prompt: user_input, response: assistant_response)
+      if @conversation.save
+        flash[:notice] = "Conversation saved successfully"
+      else
+        flash[:alert] = "Failed to save the conversation"
+      end
+    end
   end
 
-  session[:assistant_response] = assistant_response
-  redirect_to root_path
+  redirect_to chat_index_path
 end
+  
 
    def delete_thread
     session[:conversation_history] = []
@@ -60,5 +74,11 @@ end
   end
 end
 
+   private
+
+  def conversation_params
+  parsed_params = JSON.parse(params.require(:conversation))
+  ActionController::Parameters.new(parsed_params).permit(:prompt, :response)
+  end
 
 end
