@@ -51,33 +51,19 @@
     </div>
 
 </div>
-
-        <div class="table-responsive">
-        <table class="table" id="conversations-table">
-            <thead>
-              <tr>
-                <th>Prompt</th>
-                <th>Response</th>
-                <th>Date</th>
-
-                <th>Date</th>
-                <th>Delete</th>
-              </tr>
-            </thead>
-            <tbody>
-              <% @conversations.each do |conversation| %>
-                <tr>
-                  <td><%= conversation.prompt %></td>
-                  <td><%= conversation.response %></td>
-                  <td><%= conversation.created_at %></td>
-                  <td>
-                    <%= button_to 'Delete', conversation_path(conversation), method: :delete, data: { confirm: 'Are you sure you want to delete this conversation?' }, class: 'btn btn-danger' %>
-                  </td>
-                </tr>
-              <% end %>
-            </tbody>
-        </table>
+        <div id="previous-conversations" style="display: none;">
+  <h3>Previous Conversations</h3>
+        
+   <ul>
+  <% @conversations.each do |conversation| %>
+    <li class="conversation-prompt" data-response="<%= conversation.response %>">
+      <%= conversation.prompt %>
+      <%= button_to 'Delete', conversation_path(conversation), method: :delete, data: { confirm: 'Are you sure you want to delete this conversation?' }, class: 'btn btn-danger btn-sm' %>
+    </li>
+  <% end %>
+</ul>
         </div>
+
         <% else %>
           <div class="row" style="padding-top: 1.5em">
             <div class="col">
@@ -89,20 +75,16 @@
     </div>
   </div>
 
+
 <script>
-  document.addEventListener('DOMContentLoaded', function() {
-    const conversationsTable = document.getElementById('conversations-table');
-    const toggleConversationsButton = document.getElementById('toggle-conversations');
+  $(document).ready(function() {
+    $('#toggle-conversations').click(function() {
+      $('#previous-conversations').toggle();
+    });
 
-    // Initially hide the table
-    conversationsTable.style.display = 'none';
-
-    toggleConversationsButton.addEventListener('click', function() {
-      if (conversationsTable.style.display === 'none') {
-        conversationsTable.style.display = 'table';
-      } else {
-        conversationsTable.style.display = 'none';
-      }
+    $('.conversation-prompt').click(function() {
+      let response = $(this).data('response');
+      alert(response);
     });
   });
 </script>

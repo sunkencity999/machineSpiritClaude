@@ -44,3 +44,20 @@ $(document).ready(function () {
   });
 });
 
+document.addEventListener("DOMContentLoaded", function () {
+  const toggleConversationsButton = document.getElementById("toggle-conversations");
+  const previousConversations = document.getElementById("previous-conversations");
+
+  if (toggleConversationsButton && previousConversations) {
+    previousConversations.style.display = "none";
+
+    toggleConversationsButton.addEventListener("click", function () {
+      if (previousConversations.style.display === "none") {
+        previousConversations.style.display = "block";
+      } else {
+        previousConversations.style.display = "none";
+      }
+    });
+  }
+});
+

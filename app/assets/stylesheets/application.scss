@@ -104,6 +104,29 @@ flex-grow: 1;
   color: inherit;
 }
 
+#previous-conversations ul {
+  list-style: none;
+  padding: 0;
+}
+
+.conversation-prompt {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 5px;
+  margin-bottom: 5px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.conversation-prompt:hover {
+  color: #ccc;
+  cursor: pointer;
+}
+
+.list-group-item:hover {
+  background-color: #f8f9fa; /* Adjust the color as desired */
+}
 
 /*
  * Base structure
