@@ -36,9 +36,7 @@ flex-grow: 1;
 .btn-primary,
 .btn-primary:focus {
   color: #007bff;
-  text-shadow: none; /* Prevent inheritance from `body` */
   background-color: transparent;
-  border: .05rem solid #007bff;
 }
 
 .btn-primary:hover {
@@ -62,17 +60,17 @@ flex-grow: 1;
 }
 
 .btn-success {
-  color: #28a745;
+  color: #DA8488;
   background-color: transparent;
-  border: 2px solid #28a745;
+  border: 2px solid #DA8488;
   transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out;
 }
 
 .btn-success:hover,
 .btn-success:focus {
   color: #fff;
-  background-color: #28a745;
-  border-color: #28a745;
+  background-color: #DA8488;
+  border-color: #DA8488;
   text-decoration: none;
 }
 
@@ -112,6 +110,7 @@ flex-grow: 1;
 .conversation-prompt {
   display: flex;
   justify-content: space-between;
+  background: rgba(50, 50, 50, .8);
   align-items: center;
   padding: 5px;
   margin-bottom: 5px;
@@ -128,10 +127,14 @@ flex-grow: 1;
   background-color: #f8f9fa; /* Adjust the color as desired */
 }
 
-/*
- * Base structure
- */
 
+.background-image {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  z-index: 0;
+  pointer-events: none;
+  }
 html,
 body {
   height: 100%;
@@ -143,6 +146,10 @@ body {
   max-width: 42em;
 }
 
+h1 {
+	color:#B60F17;
+}
+
 hr {
   color: #fff;
 }
@@ -151,8 +158,15 @@ th, td {
   color: #fff;
 }
 
+li {
+  background: rbga(50, 50, 50, .6);
+  }
+
 #responsebox {
-  padding-top: 0.75rem;
+  padding: 3rem;
+  background: rgba(160, 153, 126, .8);
+  border-radius: 10px;
+  color: #000;
 }
 
 #user_input {
@@ -175,18 +189,14 @@ th, td {
   display: none;
 }
 
-/*
- * Cover
- */
-.cover {
-  padding: 0 1.5rem;
-}
+.btn{
+  font-weight: bold;
+  }
 
-.cover .btn-lg {
+.btn-lg {
   padding: 0.75rem 1.25rem;
   font-weight: 700;
 }
-
 
 .form-inline {
   padding-top: .75rem;
@@ -195,6 +205,13 @@ th, td {
   gap: 10px;
   width: 100%;
 }
+.inner {
+  padding: 3rem;
+  background: rgba(55, 55, 55, 0.8);
+  border-radius: 10px;
+  margin-top: 3rem;
+  margin-bottom: 3rem;
+  }
 
 .sign-out-button {
   position: fixed;
@@ -207,6 +224,11 @@ th, td {
   .form-inline {
     flex-direction: column;
     gap: 5px;
+  }
+
+
+  .inner {
+  padding: 2em;
   }
 
   .input-width {

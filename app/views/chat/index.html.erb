@@ -6,18 +6,25 @@
   <% end %>
 
   <div class="row topText">
-    <div class="col">
-      <main role="main" class="inner cover">
-        <h2 class="cover-heading"><center>Query the Machine Spirit</center></h2>
-        <p class="lead"><center>machineSpiritClaude is an interface with Anthropic's safety-focused Artificial Intelligence "Claude". This intelligence is meant to be conversational and useful for general knowledge and utility. It can teach concepts and provide understanding. A great tutor and aid for learning. </center></p>
+    <div class="col" class="lead">
+      <main role="main" class="inner">
+        <h1 class="cover-heading"><center>machineSpiritClaude</center></h1>
+        <h4><center>This conversational intelligence is meant to be a useful aid for general knowledge. It can teach concepts and provide understanding. A great tutor and aid for work and for learning.Powered by Anthropic.  </center></h4>
+        <h4><center> Be very specific in your requests;<b> Great prompts create Great responses!</b></center> </h4>
+        
 
         <hr class="mt-2 mb-2">
         <div class="row">
+          <% if @conversation_history.present? %>
           <div class="col" id="responsebox">
             <% @conversation_history.each do |message| %>
-              <p><strong><%= message[:role] %>:</strong> <%= message[:text] %></p>
+              <p><strong><%= message[:role] %>:</strong> <%= message[:text]%></p>
+               <% if message[:role] == "Assistant" %>
+                 <hr>
+               <% end %>  
             <% end %>
           </div>
+        <% end %>
         </div>
          <% if @assistant_response.present? %>
 
@@ -47,7 +54,7 @@
   </div>
   <% if user_signed_in? %>
     <div class="col-md-4 text-center">
-      <button id="toggle-conversations" class="btn btn-outline-primary">View Previous Conversations</button>
+      <button id="toggle-conversations" class="btn btn-outline-primary">View Conversations</button>
     </div>
 
 </div>

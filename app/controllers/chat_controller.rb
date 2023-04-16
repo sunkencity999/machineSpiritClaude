@@ -17,7 +17,8 @@ class ChatController < ApplicationController
 
   if user_input.present?
     # Add the user's message to the history
-    session[:conversation_history] << { role: "user", text: user_input }
+    # session[:conversation_history] << { role: "User", text: user_input }
+    session[:conversation_history] << { role: user_signed_in? ? current_user.id : "User", text: user_input }
 
     # Get the AI response
     conversation_history = session[:conversation_history].map { |msg| "#{msg[:role]}: #{msg[:text]}" }.join("\n")

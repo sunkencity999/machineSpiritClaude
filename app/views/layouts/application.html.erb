@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Machine Spirit Claude</title>
+    <title>machineSpiritClaude</title>
     <%= stylesheet_link_tag 'application', media: 'all' %>
     <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
     <%= javascript_include_tag "jquery", "jquery_ujs" %>
@@ -37,6 +37,7 @@
  </script>
   </head>
   <body>
+    <%= image_tag "mscNoBackground.png", class: "background-image" %>
     <%= yield %>
   </body>
 </html>
