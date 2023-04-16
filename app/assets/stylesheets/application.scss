@@ -229,6 +229,9 @@ li {
 
   .inner {
   padding: 1em;
+  margin-left: auto;
+  margin-right: auto;
+
   }
 
   .input-width {
@@ -261,6 +264,9 @@ li {
 
 .topText {
     padding-top: 5em;
+    margin-left: auto;
+    margin-right: auto;
+    overflow-wrap: break-word;
     }
 
 .table-responsive {
