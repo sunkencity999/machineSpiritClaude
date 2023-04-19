@@ -7,6 +7,7 @@ class ChatController < ApplicationController
     session[:conversation_history] ||= []
     @conversation_history = session[:conversation_history].reject { |msg| msg[:role].nil? || msg[:text].nil? }
     @assistant_response = session[:assistant_response]  
+    @user = current_user
 
   end
   

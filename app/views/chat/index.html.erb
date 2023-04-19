@@ -8,7 +8,7 @@
   <div class="row topText">
     <div class="col">
       <main role="main" class="inner cover">
-        <h2 class="cover-heading"><center>Query the Machine Spirit</center></h2>
+        <h3 class="cover-heading"><center>Query the Machine Spirit</center></h3>
         <p class="lead"><center>machineSpiritClaude is an interface with Anthropic's safety-focused Artificial Intelligence "Claude". This intelligence is meant to be conversational and useful for general knowledge and utility. It can teach concepts and provide understanding. A great tutor and aid for learning. </center></p>
 
         <hr class="mt-2 mb-2">
@@ -25,6 +25,12 @@
           <%= link_to 'Download Latest Response as PDF',download_latest_response_chat_index_path , class: 'btn btn-primary' %>
               
         </div>
+          <div class="download-button text-center mt-3">
+            <%= form_tag send_prompt_response_emails_path, method: :post do %>
+            <%= hidden_field_tag :user_id, @user.id %>
+            <%= submit_tag 'Email Response', class: 'btn btn-primary' %>
+            <% end %>
+          </div>
         <% end %>
 
         <%= form_with url: { controller: "chat", action: "ask" }, method: :post, id: "ask_form" do |f| %>
