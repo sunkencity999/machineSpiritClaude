@@ -6,19 +6,12 @@
   <% end %>
 
   <div class="row topText">
-<<<<<<< HEAD
     <div class="col" class="lead">
       <main role="main" class="inner">
         <h1 class="cover-heading"><center>machineSpiritClaude</center></h1>
         <h4><center>This conversational intelligence is meant to be a useful aid for general knowledge. It can teach concepts and provide understanding. A great tutor and aid for work and for learning.Powered by Anthropic.  </center></h4>
         <h4><center> Be very specific in your requests;<b> Great prompts create Great responses!</b></center> </h4>
         
-=======
-    <div class="col">
-      <main role="main" class="inner cover">
-        <h3 class="cover-heading"><center>Query the Machine Spirit</center></h3>
-        <p class="lead"><center>machineSpiritClaude is an interface with Anthropic's safety-focused Artificial Intelligence "Claude". This intelligence is meant to be conversational and useful for general knowledge and utility. It can teach concepts and provide understanding. A great tutor and aid for learning. </center></p>
->>>>>>> addMailer
 
         <hr class="mt-2 mb-2">
         <div class="row">
@@ -39,14 +32,16 @@
           <%= link_to 'Download Latest Response as PDF',download_latest_response_chat_index_path , class: 'btn btn-primary' %>
               
         </div>
+          <% if current_user %>
           <div class="download-button text-center mt-3">
             <%= form_tag send_prompt_response_emails_path, method: :post do %>
             <%= hidden_field_tag :user_id, @user.id %>
             <%= submit_tag 'Email Response', class: 'btn btn-primary' %>
             <% end %>
           </div>
+          <% end %>
         <% end %>
-
+   
         <%= form_with url: { controller: "chat", action: "ask" }, method: :post, id: "ask_form" do |f| %>
   <div class="form-inline">
     <%= f.label :text, "Query the AI:" %>
