@@ -1,6 +1,15 @@
 Rails.application.routes.draw do
   devise_for :users
 
+  resources :users do
+  post :send_prompt_response, on: :member
+  end
+
+  resources :emails, only: [] do
+  post :send_prompt_response, on: :collection
+  end
+
+
   root 'chat#index'
   post 'chat/ask', to: 'chat#ask', as: 'ask_claude'
   post 'delete_thread', to: 'chat#delete_thread'
