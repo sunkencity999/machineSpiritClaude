@@ -14,6 +14,7 @@ machineSpiritClaude is a web-based conversational assistant interface designed t
 
 machineSpiritClaude offers a variety of features to ensure a seamless and engaging user experience:
 
+- AI Image Generation using the Stable Diffusion API
 - Text-based conversation: Users can engage in a text-based conversation with the AI-powered language model to get answers to their questions or receive help with their requests.
 - Voice-to-text input: machineSpiritClaude supports voice-to-text input, enabling users to interact with the application by speaking their queries or commands.
 - Downloadable PDFs: Users can download the latest response from the conversation as a PDF document for easy reference and sharing.
