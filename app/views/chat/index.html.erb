@@ -27,6 +27,13 @@
           </div>
         <% end %>
         </div>
+
+         <% if @assistant_response.present? && session[:generated_image_url].present? %>
+         <center> <%= raw session[:generated_image_url] %> </center>
+ 
+        <% end %>
+
+
          <% if @assistant_response.present? %>
 
         <div class="download-button text-center mt-3">
@@ -42,15 +49,19 @@
           </div>
           <% end %>
         <% end %>
-   
+        
         <%= form_with url: { controller: "chat", action: "ask" }, method: :post, id: "ask_form" do |f| %>
-  <div class="form-inline">
-    <%= f.label :text, "Query the AI:" %>
-    <%= f.text_field :text, class: "form-control input-width", autofocus: true, id: "query-input" %>
-    <%= f.hidden_field :save_conversation, value: user_signed_in? ? "1" : "0" %>
-    <%= f.submit "Submit", class: "btn btn-primary mt-3" %>
-  </div>
-<% end %>
+     <div class="form-inline">
+       <%= f.label :text, "Query the AI:" %>
+       <%= f.text_field :text, class: "form-control input-width", autofocus: true, id: "query-input" %>
+       <%= f.check_box :generate_image, {checked: false}, "1", "0" %>
+       <%= f.label :generate_image, "Generate Image" %>
+       <%= f.hidden_field :save_conversation, value: user_signed_in? ? "1" : "0" %>
+       <%= f.submit "Submit", class: "btn btn-primary mt-3" %>
+     </div>
+      <% end %>
+
+
 <p>&nbsp;</p>
 <div class="row">
   <div class="col-md-4 text-center">
