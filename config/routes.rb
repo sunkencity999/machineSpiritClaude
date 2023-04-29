@@ -11,11 +11,13 @@ Rails.application.routes.draw do
 
 
   root 'chat#index'
+  post 'text-to-speech', to: 'text_to_speech#create'
   post 'chat/ask', to: 'chat#ask', as: 'ask_claude'
   post 'delete_thread', to: 'chat#delete_thread'
   post 'chat/create', to: 'chat#create', as: 'chat_create'
   post 'chat/save', to: 'chat#create', as: 'chat_save'
-  
+  get 'api_key', to: 'text_to_speech#api_key'
+ 
   
   resources :conversations, only: [:destroy]
 
