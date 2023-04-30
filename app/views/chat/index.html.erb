@@ -1,5 +1,10 @@
 <div class="container">
   <% if user_signed_in? %>
+    <% if User.name %>
+      <div class="row">
+      <p> Hello <% User.name %>! </p>
+    <% end %>
+      </div>
     <div class="sign-out-button">
       <%= link_to 'Sign out', destroy_user_session_path, method: :delete, class: 'btn btn-primary' %>
     </div>

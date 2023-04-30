@@ -1,5 +1,11 @@
 Rails.application.routes.draw do
-  devise_for :users
+  devise_for :users, controllers: {
+  registrations: 'devise/registrations',
+  sessions: 'devise/sessions',
+  passwords: 'devise/passwords',
+  confirmations: 'devise/confirmations',
+  unlocks: 'devise/unlocks'
+}
 
   resources :users do
   post :send_prompt_response, on: :member
