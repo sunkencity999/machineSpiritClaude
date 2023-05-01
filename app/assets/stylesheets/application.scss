@@ -20,74 +20,122 @@
 
 @import "bootstrap";
 
+
+
+@font-face {
+  font-family: 'Calendas_Plus';
+  src: font-url('calendas_plus-webfont.eot');
+  src: font-url('calendas_plus-webfont.eot?#iefix') format('embedded-opentype'),
+       font-url('calendas_plus-webfont.woff2') format('woff2'),
+       font-url('calendas_plus-webfont.woff') format('woff'),
+       font-url('calendas_plus-webfont.ttf') format('truetype'),
+       font-url('calendas_plus-webfont.svg#calendas_plus') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
+
+
 /* Links */
 a,
 a:focus,
 a:hover {
-  color: #fff;
+  color: #AA4A44;
 }
 
+body{
+	font-family: 'calendas_plusregular';
+}
 
+#greeting {
+  margin-top:1rem;
+}
+.inner{
+  background-color:#FFF;	
+}
 .input-width {
 flex-grow: 1;
 }
 
-/* Custom default button */
-.btn-primary,
-.btn-primary:focus {
-  color: #007bff;
-  background-color: transparent;
+.btn {
+    display: inline-block;
+    margin-right: 20px;
+    letter-spacing: 2px;
+    border: 1px solid transparent
+}
+.btn:hover{
+   border-color: #AA4A44 !important;
+   color: #AA4A44;
 }
 
-.btn-primary:hover {
-  color: #fff;
-  background-color: #007bff;
-  border-color: #007bff;
+.btn:hover span{
+    color: #AA4A44 !important;
 }
-.btn-danger {
-  color: #dc3545;
-  background-color: transparent;
-  border: 2px solid #dc3545;
-  transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out;
+.btn-round {
+    border-radius: 4px !important
 }
 
-.btn-danger:hover,
-.btn-danger:focus {
-  color: #fff;
-  background-color: #dc3545;
-  border-color: #dc3545;
-  text-decoration: none;
+.btn i {
+    margin-right: 5px
 }
 
-.btn-success {
-  color: #DA8488;
-  background-color: transparent;
-  border: 2px solid #DA8488;
-  transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out;
+.btn.btn-large i {
+    font-size: 24px
 }
 
-.btn-success:hover,
-.btn-success:focus {
-  color: #fff;
-  background-color: #DA8488;
-  border-color: #DA8488;
-  text-decoration: none;
+.button {
+    margin-top: 0;
+    margin-bottom: 0
 }
 
-.btn-dark {
-  color: #fff;
-  background-color: transparent;
-  border: 2px solid #343a40;
-  transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out;
+.btn.btn-large {
+    font-size: 18px;
+    padding: 18px 35px
 }
 
-.btn-dark:hover,
-.btn-dark:focus {
-  color: #fff;
-  background-color: #343a40;
-  border-color: #343a40;
-  text-decoration: none;
+.btn.btn-medium {
+    font-size: 14px;
+    padding: 10px 22px
 }
+
+.btn.btn-small {
+    font-size: 11px;
+    padding: 2px 14px;
+    letter-spacing: 1px
+}
+
+.btn.btn-very-small {
+    font-size: 9px;
+    padding: 1px 12px;
+    letter-spacing: 1px
+}
+
+.highlight-button {
+    border: 2px solid #000;
+    display: inline-block;
+    padding: 8px 20px 9px;
+    font-size: 12px;
+    color: #000;
+    background-color: transparent
+}
+
+.highlight-button:hover {
+    background-color: #000;
+    border: 2px solid #000;
+    color: #fff
+}
+
+.highlight-button i {
+    color: #000
+}
+
+.highlight-button:hover i {
+    color: #191919;
+}
+
+
+
+
+
 
 /* Outline buttons */
 .btn {
@@ -98,8 +146,8 @@ flex-grow: 1;
 
 /* Table row hover */
 .table-hover tbody tr:hover {
-  background-color: rgba(255, 255, 255, 0.1);
-  color: inherit;
+  background-color: rgba(255, 255, 255, 0.9);
+  color: #AA4A44;
 }
 
 #previous-conversations ul {
@@ -110,21 +158,24 @@ flex-grow: 1;
 .conversation-prompt {
   display: flex;
   justify-content: space-between;
-  background: rgba(50, 50, 50, .8);
+  background: #ccccc;
   align-items: center;
   padding: 5px;
   margin-bottom: 5px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-}
+  border-left: 2px solid #000;
+  border-right: 2px solid #000;
+  border-bottom: 1px dotted #000;
+  border-radius: 10px;
+
+  }
 
 .conversation-prompt:hover {
-  color: #ccc;
+  color: #AA4A44;
   cursor: pointer;
 }
 
 .list-group-item:hover {
-  background-color: #f8f9fa; /* Adjust the color as desired */
+  background-color: #AA4A44; /* Adjust the color as desired */
 }
 
 
@@ -138,8 +189,8 @@ flex-grow: 1;
 html,
 body {
   height: 100%;
-  background-color: #3c3c3c;
-  color: #fff;
+  background-color: #FFF;
+  color: #000;
 }
 
 .cover-container {
@@ -151,20 +202,20 @@ h1 {
 }
 
 hr {
-  color: #fff;
+  color: #000;
 }
 
 th, td {
-  color: #fff;
+  color: #000;
 }
 
 li {
-  background: rbga(50, 50, 50, .6);
+  background: rbga(50, 50, 50, .9);
   }
 
 #responsebox {
   padding: 3rem;
-  background: rgba(160, 153, 126, .8);
+  background: #ccccc;
   border-radius: 10px;
   color: #000;
 }
@@ -209,10 +260,13 @@ input {
 }
 .inner {
   padding: 3rem;
-  background: rgba(55, 55, 55, 0.8);
+  background: #ccccc;
+  border: 2px #000;
   border-radius: 10px;
   margin-top: 3rem;
   margin-bottom: 3rem;
+  border-left-style: dotted;
+  border-right-style: dotted;
   }
 
 .sign-out-button {

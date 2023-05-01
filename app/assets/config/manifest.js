@@ -5,5 +5,6 @@
 //= link bootstrap.min.css
 //= link jquery.js
 //= link jquery_ujs.js
+//= link_tree ../fonts
 
 
