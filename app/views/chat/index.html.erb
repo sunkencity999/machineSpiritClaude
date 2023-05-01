@@ -1,9 +1,7 @@
 <div class="container">
   <% if user_signed_in? %>
-    <% if User.name %>
       <div class="row" id="greeting">
-        <h5><i> Hello <% User.name %>!</i> </h5>
-    <% end %>
+        <h5><i>Welcome<% current_user.name %>!</i> </h5>
       </div>
     <div class="sign-out-button">
       <%= link_to 'Sign out', destroy_user_session_path, method: :delete, class: 'btn btn-small' %>
@@ -40,11 +38,12 @@
 
 
          <% if @assistant_response.present? %>
-
+        <% if user_signed_in? %>
         <div class="download-button text-center mt-3">
           <%= link_to 'Download Latest Response as PDF',download_latest_response_chat_index_path , class: 'btn btn-medium' %>
               
         </div>
+        <% end %>
         <div class="read-aloud-button text-center mt-3">
         <%= button_tag "Read Response Aloud", type: "button", class: "btn btn-medium", id: "read-response-aloud" %>
         </div>
@@ -63,8 +62,10 @@
      <div class="form-inline">
        <%= f.label :text, "Query the AI:" %>
        <%= f.text_field :text, class: "form-control input-width", autofocus: true, id: "query-input" %>
+       <% if user_signed_in? %>
        <%= f.check_box :generate_image, {checked: false}, "1", "0" %>
        <%= f.label :generate_image, "Generate Image" %>
+       <% end %>
        <%= f.hidden_field :save_conversation, value: user_signed_in? ? "1" : "0" %>
        <%= f.submit "Submit", class: "btn btn-medium mt-3" %>
      </div>
@@ -73,6 +74,7 @@
 
 <p>&nbsp;</p>
 <div class="row">
+  <% if user_signed_in? %>
   <div class="col-md-4 text-center">
     <%= button_tag "Voice to Text", type: "button", class: "btn btn-medium", id: "voice-to-text" %>
   </div>
@@ -80,6 +82,7 @@
     <%= form_with url: delete_thread_path, method: :post, local: true do %>
       <%= submit_tag "Delete Thread", class: "btn btn-medium" %>
     <% end %>
+  <% end %>
   </div>
   <% if user_signed_in? %>
     <div class="col-md-4 text-center">
@@ -103,7 +106,7 @@
         <% else %>
           <div class="row" style="padding-top: 1.5em">
             <div class="col">
-              <center> <p>Please <%= link_to 'Sign in', new_user_session_path, class: 'btn btn-warning btn-sm' %> or <%= link_to 'Sign up', new_user_registration_path, class: 'btn btn-medium' %> to view your conversations. This will be a premium feature after the beta.</p></center>
+              <center> <p> Please <%= link_to 'Sign in', new_user_session_path, class: 'btn btn-small' %>  or <%= link_to 'Sign up', new_user_registration_path, class: 'btn btn-small' %>to view your conversations, generate images, or download your responses as PDF files.  This will be a premium feature after the beta.</p></center>
             </div>
          </div>
         <% end %>
