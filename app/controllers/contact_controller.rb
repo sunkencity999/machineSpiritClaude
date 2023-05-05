@@ -4,7 +4,8 @@ class ContactController < ApplicationController
 
   def create
     ContactMailer.send_contact_email(params[:name], params[:email], params[:message]).deliver_now
-    redirect_to contact_path, notice: 'Your message was sent successfully.'
+    flash[:notice] = 'Your message was sent successfully.'
+    redirect_to contact_path
   end
 end
 
