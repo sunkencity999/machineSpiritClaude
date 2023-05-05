@@ -154,7 +154,19 @@ flex-grow: 1;
     color: #191919;
 }
 
+/* styling for alerts */
+.red-background {
+ 
+  color: black;
+  z-index: 9999;
+  padding: 0.25rem 1rem;
+  font-size: 0.875rem;
+}
 
+.alert {
+  position: relative;
+  z-index: 9999;
+}
 
 
 

@@ -64,7 +64,7 @@ class ChatController < ApplicationController
     if user_signed_in? && save_conversation
       @conversation = current_user.conversations.build(prompt: user_input, response: assistant_response)
       if @conversation.save
-        flash[:notice] = "Conversation saved successfully"
+        flash[:success] = "Conversation saved successfully"
       else
         flash[:alert] = "Failed to save the conversation"
       end
@@ -78,6 +78,7 @@ end
   def delete_thread
     session[:conversation_history] = []
     session[:assistant_response] = nil
+    flash[:success] = "You have deleted the thread successfully."
     redirect_to root_path
   end
 

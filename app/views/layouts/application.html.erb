@@ -6,7 +6,7 @@
     <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
     <%= javascript_include_tag "jquery", "jquery_ujs" %>
     <%= csrf_meta_tags %>
-    <meta name="csrf-token" content="<%= form_authenticity_token %>
+    <meta name="csrf-token" content="<%= form_authenticity_token%>"
     <%= favicon_link_tag 'favicon.ico' %>
     <%= favicon_link_tag 'apple-touch-icon.png', rel: 'apple-touch-icon', type: 'image/png' %>
 
@@ -40,15 +40,14 @@
  </script>
   </head>
   <body>
-    <%= render "layouts/navbar" %>
-    <% flash.each do |key, value| %>
-   <div class="alert alert-<%= key %> alert-dismissible fade show" role="alert">
-     <center> <%= value %> </center>
-    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-   </div>
-   <% end %>
-
-
+     <% flash.each do |key, value| %>
+     <div class="alert alert-<%= key %> red-background alert-dismissible show" role="alert">
+       <center><h4><%= value %></h5></center>
+       <center><button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button></center>
+     </div>
+     <% end %>
+ 
+    <%= render "layouts/navbar" %> 
     <%= yield %>
   </body>
 </html>
