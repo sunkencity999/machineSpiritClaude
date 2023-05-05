@@ -63,17 +63,6 @@ Rails.application.configure do
   config.action_mailer.default_url_options = { host: 'localhost', port: 3000 }
   
   # mailer setup
-  config.action_mailer.delivery_method = :smtp
-  config.action_mailer.smtp_settings = {
-    address: 'mail.machinespiritclaude.com',
-    port: 465,
-    domain: 'machinespiritclaude.com',
-    user_name: 'daemon@machinespiritclaude.com',
-    password: 'CStyle32!',
-    authentication: 'plain',
-    enable_starttls_auto: true
-}
-
 
 
   # Raises error for missing translations.
