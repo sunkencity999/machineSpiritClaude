@@ -21,7 +21,7 @@
 @import "bootstrap";
 
 
-
+/*
 @font-face {
   font-family: 'Calendas_Plus';
   src: font-url('calendas_plus-webfont.eot');
@@ -33,7 +33,20 @@
   font-weight: normal;
   font-style: normal;
 }
+*/
 
+@font-face {
+    font-family: 'calendas_plusbold';
+    src: url('calendas_plus_bold-webfont.eot');
+    src: url('calendas_plus_bold-webfont.eot?#iefix') format('embedded-opentype'),
+         url('calendas_plus_bold-webfont.woff2') format('woff2'),
+         url('calendas_plus_bold-webfont.woff') format('woff'),
+         url('calendas_plus_bold-webfont.ttf') format('truetype'),
+         url('calendas_plus_bold-webfont.svg#calendas_plusbold') format('svg');
+    font-weight: normal;
+    font-style: normal;
+
+}
 
 /* Links */
 a,
@@ -43,8 +56,16 @@ a:hover {
 }
 
 body{
-	font-family: 'calendas_plusregular';
+	font-family: 'calendas_plusbold';
 }
+
+.container {
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 5%;
+  padding-right: 5%;
+}
+
 
 #greeting {
   margin-top:1rem;
@@ -190,6 +211,7 @@ flex-grow: 1;
 html,
 body {
   height: 100%;
+  width: 100%;
   background-color: #FFF;
   color: #000;
 }
@@ -272,7 +294,7 @@ input {
 
 .sign-out-button {
   position: fixed;
-  top: 1rem;
+  top: 6rem;
   right: 1rem;
   z-index: 1000;
 }
@@ -281,11 +303,108 @@ input {
   border-color: #FF0000;
   box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(255, 0, 0, 0.6);
 }
-@media (max-width: 768px) {
-  .form-inline {
-    flex-direction: column;
-    gap: 5px;
+.border-dotted {
+  border-style: dotted;
+}
+
+//navigation Menu
+
+.centered-navbar-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.centered-nav-items {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: nowrap;
+}
+
+.navbar-nav {
+  display: flex;
+}
+
+#navbarNav {
+  justify-content: center;
+  margin-left:25%;
+  margin-right:25%;
   }
+
+.navbar-toggler {
+  display: none;
+}
+
+@media (min-width: 801px) {
+  .navbar-nav {
+    display: flex;
+  }
+
+  .navbar-toggler {
+    display: none;
+  }
+}
+
+@media (max-width: 800px) {
+  .navbar-toggler {
+    display: block;
+    z-index:1000;
+  }
+
+  .navbar-nav {
+    display: none;
+  }
+
+  .navbar-collapse {
+    text-align: center;
+  }
+
+  .navbar-collapse.show .navbar-nav {
+    display: flex;
+    flex-direction: column;
+  }
+}
+@media (min-height: 1100px) {
+  .navbar-nav {
+    display: flex;
+  }
+
+  .navbar-toggler {
+    display: none;
+  }
+}
+
+@media (max-height: 1099px) {
+  .navbar-toggler {
+    display: block;
+    z-index: 1000;
+  }
+
+  .navbar-nav {
+    display: none;
+  }
+
+  .navbar-collapse {
+    text-align: center;
+  }
+
+  .navbar-collapse.show .navbar-nav {
+    display: flex;
+    flex-direction: column;
+  }
+}
+
+h1 {
+  font-size: 4vw; /* Adjust the value as needed */
+}
+
+@media (max-width: 576px) {
+  h1 {
+    font-size: 6vw; /* You can adjust the value for smaller screens if necessary */
+  }
+}
+
 
 
   .inner {
@@ -334,4 +453,4 @@ input {
     overflow-x: auto;
     -webkit-overflow-scrolling: touch;
   }
-}
+

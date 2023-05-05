@@ -1,0 +1,2 @@
+module PremiumFeaturesHelper
+end

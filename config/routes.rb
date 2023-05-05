@@ -1,4 +1,11 @@
 Rails.application.routes.draw do
+  
+  get 'contact/index', as: 'contact'
+  get 'user_guide/index', as: 'user_guide'
+  get 'premium_features/index', as: 'premium_features'
+  get 'home/index', as: 'home'
+
+  
   devise_for :users, controllers: {
   registrations: 'devise/registrations',
   sessions: 'devise/sessions',
@@ -22,6 +29,7 @@ Rails.application.routes.draw do
   post 'delete_thread', to: 'chat#delete_thread'
   post 'chat/create', to: 'chat#create', as: 'chat_create'
   post 'chat/save', to: 'chat#create', as: 'chat_save'
+  post 'contact', to: 'contact#create'
   get 'api_key', to: 'text_to_speech#api_key'
  
   

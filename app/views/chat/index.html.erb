@@ -40,7 +40,7 @@
          <% if @assistant_response.present? %>
         <% if user_signed_in? %>
         <div class="download-button text-center mt-3">
-          <%= link_to 'Download Latest Response as PDF',download_latest_response_chat_index_path , class: 'btn btn-medium' %>
+          <%= link_to 'Download as PDF',download_latest_response_chat_index_path , class: 'btn btn-medium' %>
               
         </div>
         <% end %>
