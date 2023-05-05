@@ -40,7 +40,15 @@
  </script>
   </head>
   <body>
-    <%= render "layouts/navbar" %> 
+    <%= render "layouts/navbar" %>
+    <% flash.each do |key, value| %>
+   <div class="alert alert-<%= key %> alert-dismissible fade show" role="alert">
+     <center> <%= value %> </center>
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+   </div>
+   <% end %>
+
+
     <%= yield %>
   </body>
 </html>
