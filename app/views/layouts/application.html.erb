@@ -43,7 +43,7 @@
      <% flash.each do |key, value| %>
      <div class="alert alert-<%= key %> red-background alert-dismissible show" role="alert">
        <center><h4><%= value %></h5></center>
-       <center><button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button></center>
+       <center><button type="button" class="btn-close custom-close-btn" data-bs-dismiss="alert" aria-label="Close">X</button></center>
      </div>
      <% end %>
  
