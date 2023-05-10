@@ -6,15 +6,17 @@
     <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
     <%= javascript_include_tag "jquery", "jquery_ujs" %>
     <%= csrf_meta_tags %>
-    <meta name="csrf-token" content="<%= form_authenticity_token%>"
+    <meta name="csrf-token" content="<%= form_authenticity_token%>">
     <%= favicon_link_tag 'favicon.ico' %>
     <%= favicon_link_tag 'apple-touch-icon.png', rel: 'apple-touch-icon', type: 'image/png' %>
+    <%= javascript_include_tag 'stripe_payment', 'data-turbolinks-track': 'reload' %>
 
     <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
     <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+    <script src="https://js.stripe.com/v3/"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js"></script>

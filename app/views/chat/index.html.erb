@@ -1,8 +1,5 @@
 <div class="container">
   <% if user_signed_in? %>
-      <div class="row" id="greeting">
-        <h5><i>Welcome<% current_user.name %>!</i> </h5>
-      </div>
     <div class="sign-out-button">
       <%= link_to 'Sign out', destroy_user_session_path, method: :delete, class: 'btn btn-small' %>
     </div>

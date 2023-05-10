@@ -6,17 +6,24 @@
     <div class="collapse navbar-collapse" id="navbarNav">
       <ul class="navbar-nav mx-auto justify-content-center centered-nav-items">
         <li class="nav-item">
-          <%= link_to "machineSpiritClaude", root_path, class: "nav-link" %> 
+          <%= link_to "Home", root_path, class: "nav-link" %> 
         </li>
+        <% unless current_user %>
         <li class="nav-item">
           <%= link_to "Premium Features", premium_features_path, class: "nav-link" %>
         </li>
+          <% end %>
         <li class="nav-item">
           <%= link_to "User Guide", user_guide_path, class: "nav-link" %>
         </li>
         <li class="nav-item">
           <%= link_to "Contact", contact_path, class: "nav-link" %>
         </li>
+        <% if current_user %>
+        <li class="nav-item">
+        <%= link_to "Cancel Account", cancel_subscriptions_path, method: :post, class: "nav-link" %>
+        </li>
+      <% end %>
       </ul>
     </div>
   </div>
