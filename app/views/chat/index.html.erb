@@ -29,7 +29,7 @@
         </div>
 
          <% if @assistant_response.present? && session[:generated_image_url].present? %>
-           <div class="img-fluid"> <center> <%= raw session[:generated_image_url] %> </center>
+           <div class="image-container"> <center> <%= raw session[:generated_image_url] %> </center>
            </div>
  
         <% end %>
