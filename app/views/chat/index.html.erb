@@ -72,21 +72,24 @@
 
 <p>&nbsp;</p>
 <div class="row">
-  <% if user_signed_in? %>
-  <div class="col-md-4 text-center">
-    <%= button_tag "Voice to Text", type: "button", class: "btn btn-md", id: "voice-to-text" %>
-  </div>
-  <div class="col-md-4 text-center">
-    <%= form_with url: delete_thread_path, method: :post, local: true do %>
+  
+    <% if user_signed_in? %>
+      <div class="col-md-4 text-center  mt-3">
+        <%= button_tag "Voice to Text", type: "button", class: "btn btn-md", id: "voice-to-text" %>
+      </div>
+  
+    <div class="col-md-4 text-center mt-3">
+      <%= form_with url: delete_thread_path, method: :post, local: true do %>
       <%= submit_tag "Delete Thread", class: "btn btn-md" %>
-    <% end %>
-  <% end %>
-  </div>
+      <% end %>
+      <% end %>
+      </div>
+  
   <% if user_signed_in? %>
-    <div class="col-md-4 text-center">
+    <div class="col-md-4 text-center mt-3">
       <button id="toggle-conversations" class="btn btn-md">Conversations</button>
     </div>
-
+  
 </div>
         <div id="previous-conversations" style="display: none;">
   <h3>Previous Conversations</h3>
