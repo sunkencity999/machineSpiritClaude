@@ -28,12 +28,17 @@
         <% end %>
         </div>
 
-         <% if @assistant_response.present? && session[:generated_image_url].present? %>
-           <div class="image-container"> <center> <%= raw session[:generated_image_url] %> </center>
-           </div>
- 
-        <% end %>
-
+       <% if @assistant_response.present? && session[:generated_image_urls].present? %>
+  <div class="image-container">
+    <center>
+        <% if session[:generated_images_base64].present? %>
+      <% session[:generated_images_base64].each do |base64_image| %>
+        <img src="data:image/png;base64,<%= base64_image %>" alt="Generated image" style="max-width: 200px;">
+      <% end %>
+    <% end %> 
+    </center>
+  </div>
+<% end %>
 
          <% if @assistant_response.present? %>
         <% if user_signed_in? %>
@@ -56,13 +61,14 @@
           <% end %>
         <% end %>
         
-        <%= form_with url: { controller: "chat", action: "ask" }, method: :post, id: "ask_form" do |f| %>
+        <%= form_with url: { controller: "chat", action: "ask" }, method: :post, id: "ask_form",enctype: 'multipart/form-data' do |f| %>
      <div class="form-inline">
        <%= f.label :text, "Query the AI:" %>
        <%= f.text_field :text, class: "form-control input-width", autofocus: true, id: "query-input" %>
        <% if user_signed_in? %>
        <%= f.check_box :generate_image, {checked: false}, "1", "0" %>
        <%= f.label :generate_image, "Generate Image" %>
+       <%= f.file_field :document %>
        <% end %>
        <%= f.hidden_field :save_conversation, value: user_signed_in? ? "1" : "0" %>
        <%= f.submit "Submit", class: "btn btn-md mt-3" %>

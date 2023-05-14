@@ -74,6 +74,12 @@ gem "bootsnap", require: false
 # Payment Processor
 gem "stripe"
 
+# Gems for processing documents
+gem "roo"
+gem "docx"
+gem "pdf-reader"
+gem "rtesseract"
+
 # Use Sass to process CSS
 # gem "sassc-rails"
 

@@ -10,43 +10,52 @@ class ChatController < ApplicationController
     @user = current_user
   end
 
- def ask
+     def ask
   session[:conversation_history] ||= []
   user_input = params[:text]
   generate_image = params[:generate_image] == "1"
   save_conversation = params[:save_conversation] == "1"
+  uploaded_file = params[:document]
 
   if user_input.present?
+    if uploaded_file.present?
+      file_content = extract_text_from_file(uploaded_file.path)
+      user_input = user_input + "\n\n" + file_content
+    end
+
     # Add the user's message to the history
     session[:conversation_history] << { role: user_signed_in? ? current_user.id : "User", text: user_input }
 
     if generate_image
-        # Get the AI-generated image
-        base64_image = request_image_from_stable_diffusion(user_input)
-        if base64_image
-          session[:generated_image_url] = "<img src='data:image/png;base64,#{base64_image}' alt='Generated Image'>"
-          assistant_response = "Here is the image you requested."
-        else
-          session[:generated_image_url] = nil
-          assistant_response = "Error: Couldn't generate an image. Please try again later."
-        end
-        session[:conversation_history] << { role: 'Assistant', text: assistant_response }
-        session[:assistant_response] = assistant_response
+      # Get the AI-generated images
+      base64_images = request_images_from_stable_diffusion(user_input)
+
+      if base64_images
+        session[:generated_images_base64] = base64_images
+        assistant_response = "Here are the images you requested."
       else
-    # Get the AI response
+        session[:generated_images_base64] = nil
+        assistant_response = "Error: Couldn't generate images. Please try again later."
+      end
+
+      session[:conversation_history] << { role: 'Assistant', text: assistant_response }
+      session[:assistant_response] = assistant_response
+    else
+      # Get the AI response
       conversation_history = session[:conversation_history].map { |msg| "#{msg[:role]}: #{msg[:text]}" }.join("\n")
       api_key = ENV['MY_API_KEY']
+
       response = HTTParty.post('https://api.anthropic.com/v1/complete',
-                                headers: {
-                                  'x-api-key' => api_key,
-                                  'content-type' => 'application/json'
-                                },
-                                body: {
-                                  prompt: conversation_history + "\n\nHuman: #{user_input}\n\nAssistant: ",
-                                  model: "claude-v1",
-                                  max_tokens_to_sample: 300,
-                                  stop_sequences: ["\n\nHuman:"]
-                                }.to_json)
+                        headers: {
+                          'x-api-key' => api_key,
+                          'content-type' => 'application/json'
+                        },
+                        body: {
+                          prompt: conversation_history.encode('UTF-8', invalid: :replace, undef: :replace, replace: '') + "\n\nHuman: #{user_input.encode('UTF-8', invalid: :replace, undef: :replace, replace: '')}\n\nAssistant: ",
+                          model: "claude-v1",
+                          max_tokens_to_sample: 2000,
+                          stop_sequences: ["\n\nHuman:"]
+                        }.to_json)
 
       if response['completion']
         assistant_response = response['completion']
@@ -57,7 +66,7 @@ class ChatController < ApplicationController
       end
 
       # Reset the generated_image_url
-      session[:generated_image_url] = nil
+      session[:generated_images_base64] = nil
     end
 
     # Save the conversation if the user is signed in and save_conversation is true
@@ -74,23 +83,44 @@ class ChatController < ApplicationController
   redirect_to chat_index_path
 end
  
-
+ 
   def delete_thread
     session[:conversation_history] = []
     session[:assistant_response] = nil
-    flash[:notice] = "You have deleted the thread successfully."
+    flash[:notice] =
+    "You have deleted the thread successfully."
     redirect_to root_path
   end
 
   def download_latest_response
     @latest_response = session[:conversation_history].last
     respond_to do |format|
-      format.pdf do
-        render pdf: "latest_response",
-               template: "chat/latest_response",
-               layout: 'pdf'
+    format.pdf do
+    render pdf: "latest_response",
+    template: "chat/latest_response",
+    layout: 'pdf'
+    end
+    end
+  end
+  
+  def extract_text_from_pdf(file)
+  require 'pdf/reader'
+  require 'rtesseract'
+
+  text = ''
+  PDF::Reader.open(file.path) do |reader|
+    reader.pages.each do |page|
+      if page.text.empty?
+        image = page.to_image(format: 'png')
+        ocr = RTesseract.new(image.path)
+        extracted_text = ocr.to_s
+      else
+        extracted_text = page.text
+      end
+      text += extracted_text
       end
     end
+    text
   end
 
   private
@@ -98,33 +128,39 @@ end
   def conversation_params
     parsed_params = JSON.parse(params.require(:conversation))
     ActionController::Parameters.new(parsed_params).permit(:prompt, :response)
-   end
+  end
 
-       def request_image_from_stable_diffusion(prompt)
-    api_key = ENV['STABLE_API_KEY']
+
+  def request_images_from_stable_diffusion(prompt)
+  api_key = ENV['STABLE_API_KEY']
     response = HTTParty.post("https://api.stability.ai/v1/generation/stable-diffusion-v1-5/text-to-image",
                               headers: {
                                 'Content-Type' => 'application/json',
-                                'Accept' => 'image/png',
+                                'Accept' => 'application/json', # Change this line
                                 'Authorization' => "Bearer #{api_key}"
                               },
                               body: {
                                 height: 512,
                                 width: 512,
                                 text_prompts: [{ text: prompt }],
-                                samples: 1,
+                                samples: 4,
                                 steps: 50
                               }.to_json)
-
+ 
+   
     if response.code == 200
-      base64_image = Base64.strict_encode64(response.body)
-      return base64_image
+    json_response = JSON.parse(response.body)
+    if json_response["artifacts"]
+    base64_images = json_response["artifacts"].map { |img| img["base64"] }
+    puts "Received images: #{base64_images}"
+    return base64_images
     else
-      puts "Error: #{response.code} - #{response.message}"
-      puts response.body
-      return nil
+    puts "Error: Images not found in the JSON response"
+    return []
+    end
+    else
+    puts "Error: Request failed with code #{response.code}"
+    return []
     end
   end
-
 end
-
