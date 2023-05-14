@@ -68,13 +68,13 @@ Rails.application.configure do
 
   # Ignore bad email addresses and do not raise email delivery errors.
   # Set this to true and configure the email server for immediate delivery to raise delivery errors.
-  # config.action_mailer.raise_delivery_errors = false
+   config.action_mailer.raise_delivery_errors = true
 
   mailertogo_host     = ENV.fetch("MAILERTOGO_SMTP_HOST")
   mailertogo_port     = ENV.fetch("MAILERTOGO_SMTP_PORT", 587)
   mailertogo_user     = ENV.fetch("MAILERTOGO_SMTP_USER")
   mailertogo_password = ENV.fetch("MAILERTOGO_SMTP_PASSWORD")
-  mailertogo_domain   = ENV.fetch("MAILERTOGO_DOMAIN", "mydomain.com")
+  mailertogo_domain   = ENV.fetch("MAILERTOGO_DOMAIN", "https://machinespiritclaude.com")
 
   config.action_mailer.smtp_settings = {
   :address              => mailertogo_host,

@@ -8,7 +8,7 @@ machineSpiritClaude is a web-based conversational assistant interface designed t
 
 ## Live Web Application
 
-[machineSpiritClaude](https://machinespiritclaude.com)
+[machineSpiritClaude](https://ai.machinespiritclaude.com)
 
 ## Features
 
@@ -28,8 +28,8 @@ To get started with Claude, follow these steps:
 
 1. Clone the repository:
 
-git clone https://github.com/yourusername/claude.git
-cd claude
+git clone https://github.com/sunkencity999/machinespiritclaude.git
+
 
 2. Install dependencies:
 
@@ -55,8 +55,7 @@ We welcome contributions to improve machineSpirit Claude and make it even more u
 
 ## License
 
-machineSpiritClaude is released under an open-source license, allowing you to use, modify, and distribute the software freely. For more details, please refer to the `LICENSE` file included with the source code.
-
+machineSpiritClaude is private software.
 ## Author
 
 machineSpiritClaude was developed by Christopher Bradford. If you have any questions or would like to get in touch, please contact him at admin@robotbirdservices.com.
