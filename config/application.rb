@@ -20,7 +20,7 @@ module ClaudeApp
     config.session_store :active_record_store, key: '_your_session_key'
     # config.middleware.use ActionDispatch::Session::CookieStore
     config.cache_store = :redis_cache_store, { url: ENV['REDIS_URL'] }
-    config.session_store :cache_store
+    config.session_store :redis_store, { url: ENV['REDIS_URL'], expires_in: 90.minutes }
 
     # config.time_zone = "Central Time (US & Canada)"
     # config.eager_load_paths << Rails.root.join("extras")
