@@ -18,7 +18,7 @@ module ClaudeApp
     # These settings can be overridden in specific environments using the files
     # in config/environments, which are processed later.
     # config.session_store :active_record_store, key: '_your_session_key'
-    # config.middleware.use ActionDispatch::Session::CookieStore
+    config.middleware.use ActionDispatch::Session::CookieStore
     config.cache_store = :redis_cache_store, { url: ENV['REDIS_URL'] }
     config.session_store :redis_store, servers: [ENV['REDIS_URL']], expires_in: 90.minutes
 
