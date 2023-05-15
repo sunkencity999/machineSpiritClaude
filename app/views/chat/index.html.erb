@@ -28,7 +28,7 @@
         <% end %>
         </div>
 
-       <% if @assistant_response.present? && session[:generated_image_urls].present? %>
+       <% if session[:generated_image_urls].present? %>
   <div class="image-container">
     <center>
         <% if session[:generated_images_base64].present? %>
