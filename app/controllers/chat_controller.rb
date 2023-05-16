@@ -89,6 +89,7 @@ end
   def delete_thread
   session[:conversation_history] = []
   session[:generated_image_urls] = []
+  session[:assistant_response] = nil  # add this line
 
   image_urls = session.delete(:generated_image_urls) || []
   image_urls.each do |image_url|
@@ -98,10 +99,10 @@ end
       puts "Error deleting file #{image_url}: #{e.message}"
     end
   end
-  
+
   redirect_to chat_index_path
-  end
- 
+end
+
 
   def download_latest_response
     @latest_response = session[:conversation_history].last
