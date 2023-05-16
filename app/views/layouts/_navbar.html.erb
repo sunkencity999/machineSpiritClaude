@@ -17,11 +17,11 @@
           <%= link_to "User Guide", user_guide_path, class: "nav-link" %>
         </li>
         <li class="nav-item">
-          <%= link_to "Contact", contact_path, class: "nav-link" %>
+          <a href="mailto:ai@machinespiritclaude.com?subject=Question%20About%20Claude%20AI&body=Dear%20Claude%20AI%2C%0A%0A" class:"nav-link">Contact</a>
         </li>
         <% if current_user %>
         <li class="nav-item">
-        <%= link_to "Cancel Account", cancel_subscriptions_path, method: :post, class: "nav-link" %>
+        <%= link_to "Cancel Account", cancel_subscriptions_path, method: :post, data: { confirm: 'Are you sure?' }, class: "nav-link" %>
         </li>
       <% end %>
       </ul>
