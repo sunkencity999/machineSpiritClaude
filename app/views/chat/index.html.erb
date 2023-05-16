@@ -28,17 +28,17 @@
         <% end %>
         </div>
 
-       <% if session[:generated_image_urls].present? %>
-  <div class="image-container">
-    <center>
-        <% if session[:generated_images_base64].present? %>
-      <% session[:generated_images_base64].each do |base64_image| %>
-        <img src="data:image/png;base64,<%= base64_image %>" alt="Generated image" style="max-width: 200px;">
-      <% end %>
-    <% end %> 
-    </center>
-  </div>
-<% end %>
+        <% if session[:generated_image_urls].present? %>
+        <div class="image-container">
+        <center>
+          <% session[:generated_image_urls].each do |file_path| %>
+          <img src="<%= file_path %>" alt="Generated image" style="max-width: 200px;">
+        <% end %>
+        </center>
+        </div>
+       <% end %>
+ 
+         
 
          <% if @assistant_response.present? %>
         <% if user_signed_in? %>

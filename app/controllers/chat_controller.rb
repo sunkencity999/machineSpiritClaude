@@ -10,7 +10,7 @@ class ChatController < ApplicationController
     @user = current_user
   end
 
-     def ask
+  def ask
   session[:conversation_history] ||= []
   user_input = params[:text]
   generate_image = params[:generate_image] == "1"
@@ -27,21 +27,23 @@ class ChatController < ApplicationController
     session[:conversation_history] << { role: user_signed_in? ? current_user.id : "User", text: user_input }
 
     if generate_image
-      # Get the AI-generated images
       base64_images = request_images_from_stable_diffusion(user_input)
 
-      if base64_images
-        session[:generated_images_base64] = base64_images
-        assistant_response = "Here are the images you requested."
-      else
-        session[:generated_images_base64] = nil
-        assistant_response = "Error: Couldn't generate images. Please try again later."
-      end
+    if base64_images
+      file_paths = save_base64_images_to_files(base64_images).map { |path| "/generated_images/#{path}" }
+      session[:generated_image_urls] = file_paths
+      assistant_response = "Here are the images you requested."
+    else
+      session[:generated_image_urls] = nil
+      assistant_response = "Error: Couldn't generate images. Please try again later."
+    end
 
       session[:conversation_history] << { role: 'Assistant', text: assistant_response }
       session[:assistant_response] = assistant_response
     else
-      # Get the AI response
+ 
+
+    # Get the AI response
       conversation_history = session[:conversation_history].map { |msg| "#{msg[:role]}: #{msg[:text]}" }.join("\n")
       api_key = ENV['MY_API_KEY']
 
@@ -85,12 +87,21 @@ end
  
  
   def delete_thread
-    session[:conversation_history] = []
-    session[:assistant_response] = nil
-    flash[:notice] =
-    "You have deleted the thread successfully."
-    redirect_to root_path
+  session[:conversation_history] = []
+  session[:generated_image_urls] = []
+
+  image_urls = session.delete(:generated_image_urls) || []
+  image_urls.each do |image_url|
+    begin
+      File.delete(Rails.root.join('public', image_url))
+    rescue => e
+      puts "Error deleting file #{image_url}: #{e.message}"
+    end
   end
+  
+  redirect_to chat_index_path
+  end
+ 
 
   def download_latest_response
     @latest_response = session[:conversation_history].last
@@ -103,6 +114,30 @@ end
     end
   end
   
+   def save_base64_images_to_files(base64_images)
+    base64_images.each_with_index.map do |base64_image, index|
+      save_image_to_disk(base64_image, index)
+    end
+  end
+
+ def save_image_to_disk(base64_image, index)
+  file_name = "generated_image_#{index}_#{Time.now.to_i}.png"
+
+  # Ensure the directory exists
+  dir_path = Rails.root.join('public', 'generated_images')
+  Dir.mkdir(dir_path) unless Dir.exist?(dir_path)
+
+  # Now we can save the image
+   file_path = Rails.root.join('public', 'generated_images', file_name)
+
+  File.open(file_path, 'wb') do |file|
+    file.write(Base64.decode64(base64_image))
+  end
+
+  file_name
+end
+ 
+
   def extract_text_from_pdf(file)
   require 'pdf/reader'
   require 'rtesseract'
@@ -131,7 +166,7 @@ end
   end
 
 
-  def request_images_from_stable_diffusion(prompt)
+def request_images_from_stable_diffusion(prompt)
   api_key = ENV['STABLE_API_KEY']
     response = HTTParty.post("https://api.stability.ai/v1/generation/stable-diffusion-v1-5/text-to-image",
                               headers: {
@@ -146,8 +181,8 @@ end
                                 samples: 4,
                                 steps: 50
                               }.to_json)
- 
-   
+
+
     if response.code == 200
     json_response = JSON.parse(response.body)
     if json_response["artifacts"]
@@ -162,5 +197,6 @@ end
     puts "Error: Request failed with code #{response.code}"
     return []
     end
-  end
-end
+   end
+ end 
+
