@@ -57,7 +57,7 @@ a:hover {
 
 body{
 	font-family: 'calendas_plusbold';
-	font-size: 1.5vw;
+	
 }
 
 .container {
@@ -84,7 +84,7 @@ flex-grow: 1;
     margin-right: 20px;
     letter-spacing: 2px;
     border: 1px solid transparent;
-    font-size: 1.5vw;
+    font-size: 2vw;
 }
 .btn:hover{
    border-color: #AA4A44 !important;
@@ -415,6 +415,7 @@ input {
     display: flex;
     flex-direction: column;
   }
+  font-size:3vw;
 }
 @media (min-height: 1100px) {
   .navbar-nav {
