@@ -81,10 +81,10 @@
   
     <% if user_signed_in? %>
       <div class="col-md-12 d-flex justify-content-center">
-        <%= button_tag "Voice to Text", type: "button", class: "btn btn-md", id: "voice-to-text" %>
+        <%= button_tag "Voice to Text", type: "button", class: "btn btn-sm", id: "voice-to-text" %>
     
       <%= form_with url: delete_thread_chat_index_path, method: :post, local: true do %>
-      <%= submit_tag "Delete Thread", class: "btn btn-md" %>
+      <%= submit_tag "Delete Thread", class: "btn btn-sm" %>
       <% end %>
       <% end %>
       </div>
