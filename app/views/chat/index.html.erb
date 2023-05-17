@@ -80,7 +80,7 @@
 <div class="row">
   
     <% if user_signed_in? %>
-      <div class="col-md-12 d-flex justify-content-center">
+      <div class="col-md-12 d-flex justify-content-center" style="margin: 0 auto">
         <%= button_tag "Voice to Text", type: "button", class: "btn btn-sm", id: "voice-to-text" %>
     
       <%= form_with url: delete_thread_chat_index_path, method: :post, local: true do %>
