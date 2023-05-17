@@ -56,6 +56,7 @@ gem 'dotenv-rails', groups: [:development, :test]
 # allow assets like webfonts on production environment
 gem 'rails_12factor'
 
+
 # Use Redis adapter to run Action Cable in production
 # gem "redis", "~> 4.0"
 # gem "redis-rails"

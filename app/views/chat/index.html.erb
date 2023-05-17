@@ -80,40 +80,20 @@
 <div class="row">
   
     <% if user_signed_in? %>
-      <div class="col-md-4 text-center  mt-3">
+      <div class="col-md-12 d-flex justify-content-center">
         <%= button_tag "Voice to Text", type: "button", class: "btn btn-md", id: "voice-to-text" %>
-      </div>
-  
-    <div class="col-md-4 text-center mt-3">
-      <%= form_with url: delete_thread_path, method: :post, local: true do %>
+    
+      <%= form_with url: delete_thread_chat_index_path, method: :post, local: true do %>
       <%= submit_tag "Delete Thread", class: "btn btn-md" %>
       <% end %>
       <% end %>
       </div>
   
-  <% if user_signed_in? %>
-    <div class="col-md-4 text-center mt-3">
-      <button id="toggle-conversations" class="btn btn-md">Conversations</button>
-    </div>
-  
-</div>
-        <div id="previous-conversations" style="display: none;">
-  <h3>Previous Conversations</h3>
-        
-   <ul>
-  <% @conversations.each do |conversation| %>
-    <i><li class="conversation-prompt" data-response="<%= conversation.response %>">
-      <%= conversation.prompt %></i>
-      <%= button_to 'Delete', conversation_path(conversation), method: :delete, data: { confirm: 'Are you sure you want to delete this conversation?' }, class: 'btn btn-md' %>
-    </li>
-  <% end %>
-</ul>
-        </div>
-
-        <% else %>
+    
+        <% unless user_signed_in? %>
           <div class="row" style="padding-top: 1.5em">
             <div class="col">
-              <center> <p> Please <%= link_to 'Sign in', new_user_session_path, class: 'btn btn-small' %>  or <%= link_to 'Sign up', new_user_registration_path, class: 'btn btn-small' %>to view your conversations, generate images, or download your responses as PDF files.  This will be a premium feature after the beta.</p></center>
+              <center> <p> Please <%= link_to 'Sign in', new_user_session_path, class: 'btn btn-small' %>  or <%= link_to 'Sign up', new_user_registration_path, class: 'btn btn-small' %>to use voice to text, generate images, or download your responses as PDF files.  This will be a premium feature after the beta.</p></center>
             </div>
          </div>
         <% end %>

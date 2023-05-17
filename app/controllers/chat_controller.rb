@@ -2,12 +2,18 @@ class ChatController < ApplicationController
   before_action :authenticate_user!, only: [:create]
 
   def index
-    @conversations = current_user.conversations if user_signed_in?
-    @conversation = Conversation.new
-    session[:conversation_history] ||= []
-    @conversation_history = session[:conversation_history].reject { |msg| msg[:role].nil? || msg[:text].nil? }
-    @assistant_response = session[:assistant_response]
-    @user = current_user
+  @conversations = current_user.conversations if user_signed_in?
+  @conversation = Conversation.new
+  session[:conversation_history] ||= []
+  if user_signed_in? && @conversations.present?
+    # Load the last conversation from the database into the session
+    last_conversation = @conversations.last
+    session[:conversation_history] << { role: current_user.id, text: last_conversation.prompt }
+    session[:conversation_history] << { role: 'Assistant', text: last_conversation.response }
+  end
+  @conversation_history = session[:conversation_history].reject { |msg| msg[:role].nil? || msg[:text].nil? }
+  @assistant_response = session[:assistant_response]
+  @user = current_user
   end
 
   def ask
@@ -71,38 +77,35 @@ class ChatController < ApplicationController
       session[:generated_images_base64] = nil
     end
 
-    # Save the conversation if the user is signed in and save_conversation is true
-    if user_signed_in? && save_conversation
-      @conversation = current_user.conversations.build(prompt: user_input, response: assistant_response)
-      if @conversation.save
-        flash[:notice] = "Conversation saved successfully"
-      else
-        flash[:alert] = "Failed to save the conversation"
-      end
-    end
   end
 
   redirect_to chat_index_path
-end
- 
+  end
  
   def delete_thread
   session[:conversation_history] = []
   session[:generated_image_urls] = []
-  session[:assistant_response] = nil  # add this line
+  session[:assistant_response] = nil
+  Rails.logger.info("Session variables after reset: #{session.inspect}")
+
+  @user = current_user
+  @conversation = @user.conversations.last
+  @conversation.destroy if @conversation
 
   image_urls = session.delete(:generated_image_urls) || []
   image_urls.each do |image_url|
     begin
       File.delete(Rails.root.join('public', image_url))
     rescue => e
-      puts "Error deleting file #{image_url}: #{e.message}"
+      Rails.logger.error("Error deleting file #{image_url}: #{e.message}")
     end
-  end
-
-  redirect_to chat_index_path
+  end 
+  current_user.conversations.destroy_all
+  redirect_to chat_index_path, notice: 'Thread deleted.', turbolinks: [:replace, true]
 end
+ 
 
+ 
 
   def download_latest_response
     @latest_response = session[:conversation_history].last

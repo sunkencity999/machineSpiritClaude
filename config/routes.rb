@@ -23,6 +23,12 @@ Rails.application.routes.draw do
     post :send_prompt_response, on: :collection
   end
 
+  resources :chat, only: [:index] do
+  collection do
+    post 'delete_thread'
+    end
+  end
+
   root 'chat#index'
   post 'text-to-speech', to: 'text_to_speech#create'
   post 'chat/ask', to: 'chat#ask', as: 'ask_claude'
