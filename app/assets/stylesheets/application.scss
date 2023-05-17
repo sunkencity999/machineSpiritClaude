@@ -68,10 +68,7 @@ body{
 }
 
 
-#greeting {
-  margin-top:1rem;
-  margin-left:1rem;
-}
+
 .inner{
   background-color:#FFF;	
 }
@@ -84,7 +81,7 @@ flex-grow: 1;
     margin-right: 20px;
     letter-spacing: 2px;
     border: 1px solid transparent;
-    font-size: 2vw;
+    font-size: 1.5vw;
 }
 .btn:hover{
    border-color: #AA4A44 !important;
@@ -111,27 +108,7 @@ flex-grow: 1;
     margin-bottom: 0
 }
 
-.btn.btn-large {
-    font-size: 18px;
-    padding: 18px 35px
-}
 
-.btn.btn-medium {
-    font-size: 14px;
-    padding: 10px 22px
-}
-
-.btn.btn-small {
-    font-size: 11px;
-    padding: 2px 14px;
-    letter-spacing: 1px
-}
-
-.btn.btn-very-small {
-    font-size: 9px;
-    padding: 1px 12px;
-    letter-spacing: 1px
-}
 
 .highlight-button {
     border: 2px solid #000;
@@ -288,11 +265,6 @@ input {
   font-weight: bold;
   }
 
-.btn-lg {
-  padding: 0.75rem 1.25rem;
-  font-weight: 700;
-}
-
 .form-inline {
   padding-top: .75rem;
   display: flex;
@@ -310,13 +282,6 @@ input {
   border-left-style: dotted;
   border-right-style: dotted;
   }
-
-.sign-out-button {
-  position: fixed;
-  top: 6rem;
-  right: 1rem;
-  z-index: 1000;
-}
 
 .form-control:focus {
   border-color: #FF0000;
@@ -387,14 +352,22 @@ input {
 
 
 
-@media (min-width: 801px) {
+@media (min-width: 800px) {
   .navbar-nav {
-    display: flex;
+    display: none;
   }
 
   .navbar-toggler {
-    display: none;
+    display: block;
+    z-index:1000;
   }
+
+  .navbar-collapse.show .navbar-nav {
+    display: flex;
+    flex-direction: row;
+  }
+
+
   font-size:1vw;
 
   .btn {
@@ -402,7 +375,7 @@ input {
   }
 }
 
-@media (max-width: 800px) {
+@media (max-width: 801px) {
   .navbar-toggler {
     display: block;
     z-index:1000;
@@ -420,58 +393,19 @@ input {
     display: flex;
     flex-direction: column;
   }
-  font-size:3vw;
-}
-@media (min-height: 1100px) {
-  .navbar-nav {
-    display: flex;
+   font-size:3vw;
+  .btn-sm {
+    font-size:3vw;
   }
-
-  .navbar-toggler {
-    display: none;
-  }
-}
-
-@media (max-height: 1099px) {
-  .navbar-toggler {
-    display: block;
-    z-index: 1000;
-  }
-
-  .navbar-nav {
-    display: none;
-  }
-
-  .navbar-collapse {
-    text-align: center;
-  }
-
-  .navbar-collapse.show .navbar-nav {
-    display: flex;
-    flex-direction: column;
-  }
-}
-
-h1 {
-  font-size: 4vw; /* Adjust the value as needed */
 }
 
 @media (max-width: 576px) {
   h1 {
     font-size: 6vw; /* You can adjust the value for smaller screens if necessary */
   }
-}
-
-@media (width: 1028px){
-
-  .navbar-nav {
-    display: flex;
+  .btn {
+    font-size: 3vw;
   }
-
-  .navbar-toggler {
-    display: none;
-  }
-
 }
 
   .inner {

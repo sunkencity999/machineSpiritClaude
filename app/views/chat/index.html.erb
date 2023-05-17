@@ -49,7 +49,8 @@
           <button onclick="copyToClipboard(document.getElementById('responsebox').innerText)" class="btn btn-sm btn-block">Copy to clipboard</button>
         </div>
         <div class="email-response-button text-center mt-3">
-          <%= link_to 'Email Response', "mailto:?subject=Conversation%20Response, body=#{@assistant_response}", class: 'btn btn-sm btn-block' %>
+                <%= link_to 'Email Response', "mailto:?subject=Conversation%20Response&body=#{CGI::escape(@assistant_response)}", class: 'btn btn-sm btn-block' %>
+
         </div> 
       
         <% end %>
