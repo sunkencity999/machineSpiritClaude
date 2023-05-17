@@ -13,36 +13,6 @@ import "@hotwired/turbo-rails"
 
 require("../chat");
 
-$(document).ready(function () {
-  $('form').on('submit', function (event) {
-    event.preventDefault();
-    var form = $(this);
-
-    // Show the progress bar
-    $('#progress-bar').show();
-
-    // Make an AJAX request
-    $.ajax({
-      type: form.attr('method'),
-      url: form.attr('action'),
-      data: form.serialize(),
-      beforeSend: function (xhr) {
-        xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'));
-      },
-      success: function (data) {
-        // Update the view with the new data (e.g., update the messages)
-        // You may need to customize this part based on your application's structure
-      },
-      error: function (jqXHR, textStatus, errorThrown) {
-        console.log('Error: ' + textStatus + ' ' + errorThrown);
-      },
-      complete: function () {
-        // Hide the progress bar when the request is complete
-        $('#progress-bar').hide();
-      },
-    });
-  });
-});
 
 document.addEventListener("DOMContentLoaded", function () {
   const toggleConversationsButton = document.getElementById("toggle-conversations");
@@ -61,4 +31,13 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 });
 
+function copyToClipboard(text) {
+  var tempInput = document.createElement('textarea');
+  tempInput.style = 'position: absolute; left: -1000px; top: -1000px';
+  tempInput.value = text;
+  document.body.appendChild(tempInput);
+  tempInput.select();
+  document.execCommand('copy');
+  document.body.removeChild(tempInput);
+}
 
