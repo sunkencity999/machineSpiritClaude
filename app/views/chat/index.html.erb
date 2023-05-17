@@ -71,7 +71,7 @@
        <%= f.file_field :document %>
        <% end %>
        <%= f.hidden_field :save_conversation, value: user_signed_in? ? "1" : "0" %>
-       <%= f.submit "Submit", class: "btn btn-md mt-3" %>
+       <%= f.submit "Submit", class: "btn btn-sm mt-3 btn-block" %>
      </div>
       <% end %>
 
@@ -80,11 +80,11 @@
 <div class="row">
   
     <% if user_signed_in? %>
-      <div class="col-md-12 d-flex justify-content-center" style="margin: 0 auto">
-        <%= button_tag "Voice to Text", type: "button", class: "btn btn-sm", id: "voice-to-text" %>
+      <div class="col-md-12 d-flex justify-content-center">
+        <%= button_tag "Voice to Text", type: "button", class: "btn btn-sm btn-block", id: "voice-to-text" %>
     
       <%= form_with url: delete_thread_chat_index_path, method: :post, local: true do %>
-      <%= submit_tag "Delete Thread", class: "btn btn-sm" %>
+      <%= submit_tag "Delete Thread", class: "btn btn-sm btn-block" %>
       <% end %>
       <% end %>
       </div>
