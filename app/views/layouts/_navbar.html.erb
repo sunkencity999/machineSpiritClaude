@@ -23,6 +23,9 @@
         <li class="nav-item">
         <%= link_to "Cancel Account", cancel_subscriptions_path, method: :post, data: { confirm: 'Are you sure?' }, class: "nav-link" %>
         </li>
+        <li class="nav-item">
+          <%= link_to 'Sign out', destroy_user_session_path, method: :delete, class: "nav-link" %>
+        </li>
       <% end %>
       </ul>
     </div>
