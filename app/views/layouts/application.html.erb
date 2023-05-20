@@ -54,12 +54,33 @@
  </script>
 
  <script>
-  document.addEventListener('ajax:beforeSend', function() {
-    $('.lds-roller').css('display', 'inline-block');
-});
+  
+document.querySelectorAll('form').forEach((form) => {
+  form.addEventListener('submit', function(event) {
+    event.preventDefault(); // Prevents the default form submission.
 
-document.addEventListener('ajax:complete', function() {
-    $('.lds-roller').css('display', 'none');
+    let loadingAnimation = document.querySelector('.lds-roller');
+    loadingAnimation.style.display = 'inline-block'; // Display loading animation.
+
+    fetch(this.action, {
+      method: this.method,
+      body: new FormData(this),
+    })
+    .then(response => response.json())
+    .then(data => {
+      // When request is successful.
+      loadingAnimation.style.display = 'none'; // Hide loading animation.
+
+      // Here you might want to do something with the data.
+    })
+    .catch((error) => {
+      // When request fails.
+      loadingAnimation.style.display = 'none'; // Hide loading animation.
+      
+      // Here you might want to handle errors.
+      console.error('Error:', error);
+    });
+  });
 });
 
  </script>

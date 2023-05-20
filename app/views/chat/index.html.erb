@@ -1,4 +1,4 @@
-<div class="container">
+<div class="container" id="parent">
  
   <div class="row topText">
     <div class="col" class="lead">
@@ -110,16 +110,42 @@
 
 
 <script>
-  $(document).ready(function() {
-    $('#toggle-conversations').click(function() {
-      $('#previous-conversations').toggle();
-    });
+// We use a query selector to find all forms in the page and add an event listener.
+document.querySelectorAll('form').forEach((form) => {
+  form.addEventListener('submit', function(event) {
+    event.preventDefault(); // Prevents the default form submission.
 
-    $('.conversation-prompt').click(function() {
-      let response = $(this).data('response');
-      alert(response);
+    let loadingAnimation = document.querySelector('.lds-roller');
+    loadingAnimation.style.display = 'inline-block'; // Display loading animation.
+
+    fetch(this.action, {
+      method: this.method,
+      body: new FormData(this),
+    })
+    .then(response => {
+      if (!response.ok) { // Check if the HTTP status code is in the 200-299 range.
+        throw new Error('Network response was not ok'); // Throw an error if the status is outside the 200-299 range.
+      }
+      return response.text(); // If your server responds with string or HTML, use response.text().
+    })
+    .then(data => {
+      // When request is successful.
+      loadingAnimation.style.display = 'none'; // Hide loading animation.
+      
+      // Refresh the page
+      window.location.reload();
+    })
+    .catch((error) => {
+      // When request fails.
+      loadingAnimation.style.display = 'none'; // Hide loading animation.
+      console.error('Error:', error);
+      
+      // Still refresh the page even if an error occurs.
+      window.location.reload();
     });
   });
+});
+
 </script>
 <script>
 $(document).ready(function() {
