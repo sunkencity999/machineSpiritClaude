@@ -15,7 +15,8 @@
     <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
+    
+    <script src="https://unpkg.com/@rails/ujs"></script>
     <script src="https://js.stripe.com/v3/"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
@@ -51,17 +52,30 @@
   document.body.removeChild(tempInput);
 }
  </script>
+
+ <script>
+  document.addEventListener('ajax:beforeSend', function() {
+    $('.lds-roller').css('display', 'inline-block');
+});
+
+document.addEventListener('ajax:complete', function() {
+    $('.lds-roller').css('display', 'none');
+});
+
+ </script>
+
   </head>
   <body>
+    
      <% flash.each do |key, value| %>
      <div class="alert alert-<%= key %> red-background alert-dismissible show" role="alert">
        <center><h4><%= value %></h5></center>
        <center><button type="button" class="btn-close custom-close-btn" data-bs-dismiss="alert" aria-label="Close">X</button></center>
      </div>
      <% end %>
- 
-    <%= render "layouts/navbar" %> 
-    <%= yield %>
+    
+     <%= render "layouts/navbar" %> 
+      <%= yield %>
   </body>
 </html>
 

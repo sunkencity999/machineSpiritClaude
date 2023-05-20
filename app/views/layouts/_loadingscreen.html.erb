@@ -1,0 +1,47 @@
+<div class="loading-screen">
+  <div class="loading-text">
+    <span class="loading-text-inner">
+      Loading...
+    </span>
+  </div>
+</div>
+
+<style>
+.loading-screen {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 1000;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: none;
+}
+
+.loading-text {
+  text-align: center;
+  font-size: 20px;
+  color: black;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.loading-text-inner {
+  animation: loading-text 1s infinite linear;
+}
+
+@keyframes loading-text {
+  0% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+</style>
+
