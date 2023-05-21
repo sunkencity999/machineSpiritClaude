@@ -33,6 +33,9 @@ gem "jbuilder"
 # For making API calls
 gem "httparty"
 
+#for using OpenAI Gems
+gem "openai"
+
 # For larger cookie storage and longer conversations
 gem 'activerecord-session_store'
 

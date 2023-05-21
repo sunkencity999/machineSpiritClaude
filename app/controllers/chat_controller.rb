@@ -16,7 +16,7 @@ class ChatController < ApplicationController
   @user = current_user
   end
 
-  def ask
+    def ask
   session[:conversation_history] ||= []
   user_input = params[:text]
   generate_image = params[:generate_image] == "1"
@@ -24,6 +24,7 @@ class ChatController < ApplicationController
   uploaded_file = params[:document]
 
   if user_input.present?
+    # Handling uploaded file
     if uploaded_file.present?
       file_content = extract_text_from_file(uploaded_file.path)
       user_input = user_input + "\n\n" + file_content
@@ -35,53 +36,58 @@ class ChatController < ApplicationController
     if generate_image
       base64_images = request_images_from_stable_diffusion(user_input)
 
-    if base64_images
-      file_paths = save_base64_images_to_files(base64_images).map { |path| "/generated_images/#{path}" }
-      session[:generated_image_urls] = file_paths
-      assistant_response = "Here are the images you requested."
-    else
-      session[:generated_image_urls] = nil
-      assistant_response = "Error: Couldn't generate images. Please try again later."
-    end
+      if base64_images
+        file_paths = save_base64_images_to_files(base64_images).map { |path| "/generated_images/#{path}" }
+        session[:generated_image_urls] = file_paths
+        assistant_response = "Here are the images you requested."
+      else
+        session[:generated_image_urls] = nil
+        assistant_response = "Error: Couldn't generate images. Please try again later."
+      end
 
       session[:conversation_history] << { role: 'Assistant', text: assistant_response }
       session[:assistant_response] = assistant_response
-    else
- 
-
-    # Get the AI response
-      conversation_history = session[:conversation_history].map { |msg| "#{msg[:role]}: #{msg[:text]}" }.join("\n")
-      api_key = ENV['MY_API_KEY']
-
-      response = HTTParty.post('https://api.anthropic.com/v1/complete',
-                        headers: {
-                          'x-api-key' => api_key,
-                          'content-type' => 'application/json'
-                        },
-                        body: {
-                          prompt: conversation_history.encode('UTF-8', invalid: :replace, undef: :replace, replace: '') + "\n\nHuman: #{user_input.encode('UTF-8', invalid: :replace, undef: :replace, replace: '')}\n\nAssistant: ",
-                          model: "claude-v1",
-                          max_tokens_to_sample: 2000,
-                          stop_sequences: ["\n\nHuman:"]
-                        }.to_json)
-
-      if response['completion']
-        assistant_response = response['completion']
-        session[:conversation_history] << { role: 'Assistant', text: assistant_response }
-        session[:assistant_response] = assistant_response
-      else
-        session[:assistant_response] = "Error: Couldn't get a response from Claude. Please try again later."
-      end
 
       # Reset the generated_image_url
       session[:generated_images_base64] = nil
+    else
+       
+    # Get the AI response
+    api_key = ENV['OPENAI_API_KEY']
+
+    # Build the conversation history for the chat models
+    messages = session[:conversation_history].map do |msg|
+      { 'role' => msg[:role] == current_user.id ? 'user' : 'assistant', 'content' => msg[:text] }
+    end
+    messages << { 'role' => 'user', 'content' => user_input }
+
+    response = HTTParty.post('https://api.openai.com/v1/chat/completions',
+      headers: {
+        'Authorization' => "Bearer #{api_key}",
+        'Content-Type' => 'application/json'
+      },
+      body: {
+        'model' => 'gpt-3.5-turbo',
+        'messages' => messages,
+        'temperature' => 0.7,
+        'max_tokens' => 150,
+      }.to_json)
+
+    if response.parsed_response['choices']
+      assistant_response = response.parsed_response['choices'][0]['message']['content'].strip
+      session[:conversation_history] << { role: 'Assistant', text: assistant_response }
+      session[:assistant_response] = assistant_response
+    else
+      session[:assistant_response] = "Error: Couldn't get a response from the Assistant. Please try again later."
     end
 
+    # Reset the generated_image_url
+    session[:generated_image_urls] = nil
   end
 
   redirect_to chat_index_path
-  end
- 
+end
+
   def delete_thread
   session[:conversation_history] = []
   session[:generated_image_urls] = []
@@ -161,6 +167,7 @@ end
     end
     text
   end
+  end
 
   private
 
@@ -201,6 +208,7 @@ def request_images_from_stable_diffusion(prompt)
     puts "Error: Request failed with code #{response.code}"
     return []
     end
-   end
- end 
+  end
+end
+
 
