@@ -22,24 +22,84 @@
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js"></script>
  <script>
+
    document.addEventListener("DOMContentLoaded", function () {
+  const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+  const recognition = new SpeechRecognition();
+  recognition.continuous = true; // Keep listening until stopped manually
+
   const voiceToTextButton = document.getElementById("voice-to-text");
+  const conversationButton = document.getElementById("conversation");
+  const loadingAnimation = document.querySelector('.lds-roller'); // Define loading animation here
 
-  if (voiceToTextButton) {
-    const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
-    const recognition = new SpeechRecognition();
+  recognition.onresult = function (event) {
+    const transcript = event.results[event.resultIndex][0].transcript;
 
-    recognition.onresult = function (event) {
-      const transcript = event.results[0][0].transcript;
+    if (event.results[event.resultIndex].isFinal) { // Transcript is final
       const textField = document.getElementById("query-input");
       textField.value = transcript;
-    };
 
+      // Show loading animation
+      loadingAnimation.style.display = 'inline-block';
+
+      // submit the form here
+      document.querySelector('form').submit();
+
+      // stop the recognition after form submit
+      recognition.stop();
+    }
+  };
+
+  recognition.onend = function() {
+    // Hide loading animation
+    loadingAnimation.style.display = 'none';
+
+    // Ready to read the response aloud
+    readResponseAloud();
+  }
+
+  if (voiceToTextButton) {
     voiceToTextButton.addEventListener("click", function () {
       recognition.start();
     });
   }
+
+  if (conversationButton) {
+    conversationButton.addEventListener("click", function () {
+         alert("Conversation Mode Activated! machineSpiritClaude will listen for your speech, and then read the response from the AI to you.");
+      loadingAnimation.style.display = 'inline-block';
+      recognition.start();
+    });
+  }
 });
+
+
+   function readResponseAloud() {
+  const assistantResponse = '<%= j @assistant_response %>';
+  const voiceId = '21m00Tcm4TlvDq8ikWAM';
+  const apiKey = '<%= ENV["ELEVENLABS_API_KEY"] %>';
+
+  const xhr = new XMLHttpRequest();
+  xhr.open('POST', '/text-to-speech', true);
+  xhr.setRequestHeader('Content-Type', 'application/json');
+  xhr.setRequestHeader('Authorization', `Bearer ${apiKey}`);
+  xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'));
+  xhr.responseType = 'arraybuffer'; // Set the response type to arraybuffer
+
+  xhr.onload = function(e) {
+    if (xhr.status === 200) {
+      const audioBlob = new Blob([xhr.response], { type: 'audio/mpeg' }); // Create a Blob directly from the response
+      const audioUrl = URL.createObjectURL(audioBlob);
+      const audio = new Audio(audioUrl);
+      audio.play();
+    } else {
+      console.error("Error: Failed to request audio from Eleven Labs API.");
+      alert("Error: Failed to request audio from Eleven Labs API.");
+    }
+  };
+  xhr.send(JSON.stringify({ text: assistantResponse, voice_id: voiceId }));
+}
+ 
  </script>
  <script>
    function copyToClipboard(text) {
