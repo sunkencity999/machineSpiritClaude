@@ -144,6 +144,24 @@ document.querySelectorAll('form').forEach((form) => {
   });
 });
 
+// select the target node
+let targetNode = document.getElementById('responsebox'); 
+// create an observer instance
+let observer = new MutationObserver(function(mutations) {
+    mutations.forEach(function(mutation) {
+        if (mutation.type === 'childList') {
+            readResponseAloud();
+        }
+    });    
+});
+ 
+// configuration of the observer:
+let config = { childList: true };
+ 
+// pass in the target node, as well as the observer options
+observer.observe(targetNode, config);
+
+
  </script>
 
   </head>
