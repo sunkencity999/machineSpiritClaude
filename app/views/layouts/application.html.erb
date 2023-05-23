@@ -53,9 +53,7 @@
   recognition.onend = function() {
     // Hide loading animation
     loadingAnimation.style.display = 'none';
-
-    // Ready to read the response aloud
-    readResponseAloud();
+    
   }
 
   if (voiceToTextButton) {
@@ -66,17 +64,18 @@
 
   if (conversationButton) {
     conversationButton.addEventListener("click", function () {
-         alert("Conversation Mode Activated! machineSpiritClaude will listen for your speech, and then read the response from the AI to you.");
+         alert("Conversation Mode Activated! machineSpiritClaude will listen for your speech, and then read then submit your response to the AI.");
       loadingAnimation.style.display = 'inline-block';
       recognition.start();
+      
     });
   }
 });
 
 
-   function readResponseAloud() {
-     const assistantResponse = '<%= j @assistant_response %>';
-     console.log("Assistant response: ", assistantResponse); 
+
+   function readResponseAloud(assistantResponse) {
+  console.log("Assistant response: ", assistantResponse);
   const voiceId = '21m00Tcm4TlvDq8ikWAM';
   const apiKey = '<%= ENV["ELEVENLABS_API_KEY"] %>';
 
@@ -100,6 +99,7 @@
   };
   xhr.send(JSON.stringify({ text: assistantResponse, voice_id: voiceId }));
 }
+
  
  </script>
  <script>
@@ -143,25 +143,7 @@ document.querySelectorAll('form').forEach((form) => {
     });
   });
 });
-
-// select the target node
-let targetNode = document.getElementById('responsebox'); 
-// create an observer instance
-let observer = new MutationObserver(function(mutations) {
-    mutations.forEach(function(mutation) {
-        if (mutation.type === 'childList') {
-            readResponseAloud();
-        }
-    });    
-});
- 
-// configuration of the observer:
-let config = { childList: true };
- 
-// pass in the target node, as well as the observer options
-observer.observe(targetNode, config);
-
-
+  
  </script>
 
   </head>
