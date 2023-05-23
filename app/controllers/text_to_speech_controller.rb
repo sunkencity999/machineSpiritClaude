@@ -39,7 +39,7 @@ end
 
  
   def text_to_speech_params
-    params.permit(:text, :voice_id)
+  params.require(:text_to_speech).permit(:text, :voice_id)
   end
 
 end

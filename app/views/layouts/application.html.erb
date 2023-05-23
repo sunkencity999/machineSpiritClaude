@@ -75,7 +75,8 @@
 
 
    function readResponseAloud() {
-  const assistantResponse = '<%= j @assistant_response %>';
+     const assistantResponse = '<%= j @assistant_response %>';
+     console.log("Assistant response: ", assistantResponse); 
   const voiceId = '21m00Tcm4TlvDq8ikWAM';
   const apiKey = '<%= ENV["ELEVENLABS_API_KEY"] %>';
 

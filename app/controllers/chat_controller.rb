@@ -173,7 +173,7 @@ end
 
   def conversation_params
   parsed_params = JSON.parse(params.require(:conversation))
-  ActionController::Parameters.new(parsed_params).permit(:prompt, :response, text_to_speech: [:text, :voice_id])
+  ActionController::Parameters.new(parsed_params).permit(:prompt, :response)
   end
 
 
