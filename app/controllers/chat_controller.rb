@@ -70,7 +70,7 @@ class ChatController < ApplicationController
         'model' => 'gpt-3.5-turbo',
         'messages' => messages,
         'temperature' => 0.7,
-        'max_tokens' => 150,
+        'max_tokens' => 3000,
       }.to_json)
 
     if response.parsed_response['choices']
