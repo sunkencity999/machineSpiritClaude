@@ -15,7 +15,31 @@ class ChatController < ApplicationController
   @assistant_response = session[:assistant_response]
   @user = current_user
   end
+  
 
+   def save_base64_images_to_files(base64_images)
+    base64_images.each_with_index.map do |base64_image, index|
+      save_image_to_disk(base64_image, index)
+    end
+  end
+
+ def save_image_to_disk(base64_image, index)
+  file_name = "generated_image_#{index}_#{Time.now.to_i}.png"
+
+  # Ensure the directory exists
+  dir_path = Rails.root.join('public', 'generated_images')
+  Dir.mkdir(dir_path) unless Dir.exist?(dir_path)
+
+  # Now we can save the image
+   file_path = Rails.root.join('public', 'generated_images', file_name)
+
+  File.open(file_path, 'wb') do |file|
+    file.write(Base64.decode64(base64_image))
+  end
+
+  file_name
+end
+ 
     def ask
   session[:conversation_history] ||= []
   user_input = params[:text]
@@ -123,30 +147,7 @@ end
     end
     end
   end
-  
-   def save_base64_images_to_files(base64_images)
-    base64_images.each_with_index.map do |base64_image, index|
-      save_image_to_disk(base64_image, index)
-    end
-  end
 
- def save_image_to_disk(base64_image, index)
-  file_name = "generated_image_#{index}_#{Time.now.to_i}.png"
-
-  # Ensure the directory exists
-  dir_path = Rails.root.join('public', 'generated_images')
-  Dir.mkdir(dir_path) unless Dir.exist?(dir_path)
-
-  # Now we can save the image
-   file_path = Rails.root.join('public', 'generated_images', file_name)
-
-  File.open(file_path, 'wb') do |file|
-    file.write(Base64.decode64(base64_image))
-  end
-
-  file_name
-end
- 
 
   def extract_text_from_pdf(file)
   require 'pdf/reader'
