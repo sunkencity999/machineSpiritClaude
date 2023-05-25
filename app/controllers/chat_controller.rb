@@ -84,6 +84,16 @@ end
      { 'role' => msg[:role] == "User" ? 'user' : 'assistant', 'content' => msg[:text] }      
     end
     messages << { 'role' => 'user', 'content' => user_input }
+    
+    subject_expert_mode = params[:subjectExpertMode] == "true"
+    creative_mode = params[:creativeMode] == "true"
+
+    temperature = 0.7 # default value, balanced responses
+    if subject_expert_mode
+      temperature = 0.02 # strict, authoritative responses like a subject matter expert
+    elsif creative_mode
+      temperature = 1.8 # creative responses, with a fair amount of chaos
+    end
 
     response = HTTParty.post('https://api.openai.com/v1/chat/completions',
       headers: {
@@ -93,7 +103,7 @@ end
       body: {
         'model' => 'gpt-3.5-turbo',
         'messages' => messages,
-        'temperature' => 0.7,
+        'temperature' => temperature,
         'max_tokens' => 3000,
       }.to_json)
 

@@ -75,8 +75,21 @@
        <%= f.label :text, "Query the AI:" %>
        <%= f.text_field :text, class: "form-control input-width", autofocus: true, id: "query-input" %>
        <% if user_signed_in? %>
+      
+       <div class="col">  
+       <%= f.check_box :subject_expert_mode, {checked: false}, "true", "false" %>
+       <%= f.label :subject_expert_mode, "Expert Mode" %>
+       </div>
+       <div class="col">
+       <%= f.check_box :creative_mode, {checked: false}, "true", "false" %>
+       <%= f.label :creative_mode, "Creative Mode" %>
+       </div>
+       <div class="col">
        <%= f.check_box :generate_image, {checked: false}, "1", "0" %>
        <%= f.label :generate_image, "Generate Image" %>
+       </div>
+      
+
        <%= f.file_field :document %>
        <% end %>
        <%= f.hidden_field :save_conversation, value: user_signed_in? ? "1" : "0" %>

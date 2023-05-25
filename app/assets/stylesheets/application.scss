@@ -353,8 +353,32 @@ input {
   height: auto;
 }
 
+@media (min-width: 1500px) {
+  .navbar-nav {
+    display: flex;
+  }
+
+  .navbar-toggler {
+    display: none;
+    z-index:1000;
+  }
+
+  .navbar-collapse.show .navbar-nav {
+    display: flex;
+    flex-direction: row;
+  }
 
 
+  font-size:1vw;
+
+  .btn {
+    font-size:1vw;
+  }
+}
+
+
+
+/**
 @media (min-width: 800px) {
   .navbar-nav {
     display: none;
@@ -377,6 +401,7 @@ input {
     font-size:1vw;
   }
 }
+**/
 
 @media (max-width: 801px) {
   .navbar-toggler {
