@@ -376,16 +376,13 @@ input {
   }
 }
 
-
-
-/**
-@media (min-width: 800px) {
+@media (min-width: 1024px) and (max-width: 1366) {
   .navbar-nav {
-    display: none;
+    display: flex;
   }
 
   .navbar-toggler {
-    display: block;
+    display: none;
     z-index:1000;
   }
 
@@ -401,7 +398,32 @@ input {
     font-size:1vw;
   }
 }
-**/
+
+
+
+@media (min-width:769px) and (max-width:1024px) {
+  .navbar-nav {
+    display: none;
+  }
+
+  .navbar-toggler {
+    display: block;
+    z-index:1000;
+  }
+
+  .navbar-collapse.show .navbar-nav {
+    display: flex;
+    flex-direction: row;
+  }
+
+
+  font-size:2vw;
+
+  .btn {
+    font-size:1vw;
+  }
+}
+
 
 @media (max-width: 801px) {
   .navbar-toggler {
