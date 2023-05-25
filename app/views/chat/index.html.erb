@@ -55,7 +55,7 @@
           <%= link_to 'Download as PDF',download_latest_response_chat_index_path , class: 'btn btn-sm btn-block' %>
               
         </div>
-        <% end %>
+      
         <div class="read-aloud-button text-center mt-3">
         <%= button_tag "Read Response Aloud", type: "button", class: "btn btn-sm btn-block", id: "read-response-aloud" %>
         </div>
@@ -66,7 +66,7 @@
                 <%= link_to 'Email Response', "mailto:?subject=Conversation%20Response&body=#{CGI::escape(@assistant_response)}", class: 'btn btn-sm btn-block' %>
 
         </div> 
-      
+        <% end %> 
         <% end %>
          
 
