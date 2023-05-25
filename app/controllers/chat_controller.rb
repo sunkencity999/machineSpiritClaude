@@ -81,7 +81,7 @@ end
 
     # Build the conversation history for the chat models
     messages = session[:conversation_history].map do |msg|
-      { 'role' => msg[:role] == current_user.id ? 'user' : 'assistant', 'content' => msg[:text] }
+     { 'role' => msg[:role] == "User" ? 'user' : 'assistant', 'content' => msg[:text] }      
     end
     messages << { 'role' => 'user', 'content' => user_input }
 
