@@ -1,0 +1,14 @@
+{
+  "name": "machineSpiritClaude",
+  "short_name": "mSC",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "description": "We make AI easy. Create emails, essays, and reports. Get great recipes. Receive smart and relevant answers to your questions, without having to click a bunch of links to get the info you need. With machineSpiritClaude, AI is easy and the information is natural and personal. Powered by Open AI's GPT Large Language Models.",
+  "icons": [{
+    "src": "apple-touch-icon2.png",
+	   "sizes": "180x180",
+           "type": "image/png"
+  }]
+}
+

@@ -6,6 +6,7 @@
     <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
     <%= javascript_include_tag "jquery", "jquery_ujs" %>
     <%= csrf_meta_tags %>
+    <link rel="manifest" href='manifest.json'>
     <meta name="csrf-token" content="<%= form_authenticity_token%>">
     <%= favicon_link_tag 'favicon.ico' %>
     <%= favicon_link_tag 'apple-touch-icon.png', rel: 'apple-touch-icon', type: 'image/png' %>
