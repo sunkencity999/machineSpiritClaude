@@ -2,7 +2,9 @@
 
 # machineSpiritClaude: A Conversational Assistant Interface
 
-machineSpiritClaude is a web-based conversational assistant interface designed to help users with their questions and requests. Built using Ruby on Rails and powered by the Chat GPT 3.5 Turbo language model, machineSpiritClaude provides an intuitive and engaging way to interact with AI, along with practical features to make this interaction fruitful.
+machineSpiritClaude is a web-based conversational assistant interface designed to help users with their questions and requests. Built using Ruby on Rails and powered by the Chat GPT 4 large language model, machineSpiritClaude provides an intuitive and engaging way to interact with AI, along with practical features to make this interaction fruitful.
+
+This is a progressive web app, and can be installed on near any machine, including Android phones, Unix and Windows-based computers, etc.
 
 machineSpiritClaude is here to make working with AI easy; a simple and clean interface, great tools and features to make working with an AI practical and not a novelty. 
 
@@ -23,35 +25,6 @@ machineSpiritClaude offers a variety of features to ensure a seamless and engagi
 - Read-Response-Aloud: with the press of a button, the application will read the response from the AI aloud to the user
 - Email Responses: with the press of a button, the application will open your default mail client with the body populated by the response from the AI
 
-
-## Getting Started
-
-If you would like to run a local version of the application, please follow the below steps.
-
-To get started with machineSpiritClaude, follow these steps:
-
-1. Clone the repository:
-
-git clone https://github.com/sunkencity999/machinespiritclaude.git
-
-
-2. Install dependencies:
-
-bundle install
-
-
-3. Set up the database:
-
-rails db:create
-rails db:migrate
-
-
-4. Start the Rails server:
-
-rails server
-
-
-5. Open your browser and visit http://localhost:3000 to interact with Claude.
 
 ## Contributing
 
