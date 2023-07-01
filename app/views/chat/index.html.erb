@@ -98,8 +98,8 @@
       <% end %>
 
 
-<p>&nbsp;</p>
-<div class="row">
+  <p>&nbsp;</p>
+  <div class="row">
   
     <% if user_signed_in? %>
       <div class="col-md-12 d-flex justify-content-center">
@@ -123,10 +123,10 @@
   </div>
 
 
-<script>
-// We use a query selector to find all forms in the page and add an event listener.
-document.querySelectorAll('form').forEach((form) => {
-  form.addEventListener('submit', function(event) {
+  <script>
+  // We use a query selector to find all forms in the page and add an event listener.
+  document.querySelectorAll('form').forEach((form) => {
+    form.addEventListener('submit', function(event) {
     event.preventDefault(); // Prevents the default form submission.
 
     let loadingAnimation = document.querySelector('.lds-roller');
@@ -160,23 +160,23 @@ document.querySelectorAll('form').forEach((form) => {
   });
 });
 
-</script>
-<script>
-$(document).ready(function() {
+  </script>
+  <script>
+  $(document).ready(function() {
   
-  $('#read-response-aloud').click(function() {
-  const assistantResponse = '<%= j @assistant_response %>';
-  const voiceId = '21m00Tcm4TlvDq8ikWAM';
-  const apiKey = '<%= ENV["ELEVENLABS_API_KEY"] %>';
+    $('#read-response-aloud').click(function() {
+    const assistantResponse = '<%= j @assistant_response %>';
+    const voiceId = '21m00Tcm4TlvDq8ikWAM';
+    const apiKey = '<%= ENV["ELEVENLABS_API_KEY"] %>';
 
-  const xhr = new XMLHttpRequest();
-  xhr.open('POST', '/text-to-speech', true);
-  xhr.setRequestHeader('Content-Type', 'application/json');
-  xhr.setRequestHeader('Authorization', `Bearer ${apiKey}`);
-  xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'));
-  xhr.responseType = 'arraybuffer'; // Set the response type to arraybuffer
+    const xhr = new XMLHttpRequest();
+    xhr.open('POST', '/text-to-speech', true);
+    xhr.setRequestHeader('Content-Type', 'application/json');
+    xhr.setRequestHeader('Authorization', `Bearer ${apiKey}`);
+    xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'));
+    xhr.responseType = 'arraybuffer'; // Set the response type to arraybuffer
 
-  xhr.onload = function(e) {
+    xhr.onload = function(e) {
     if (xhr.status === 200) {
       const audioBlob = new Blob([xhr.response], { type: 'audio/mpeg' }); // Create a Blob directly from the response
       const audioUrl = URL.createObjectURL(audioBlob);
@@ -188,12 +188,12 @@ $(document).ready(function() {
     }
   };
 
-  xhr.send(JSON.stringify({ text: assistantResponse, voice_id: voiceId }));
-});
+    xhr.send(JSON.stringify({ text: assistantResponse, voice_id: voiceId }));
+  });
 
 
   });
 
-</script> 
+  </script> 
 
 
