@@ -199,7 +199,7 @@ class ChatController < ApplicationController
 
   def request_images_from_stable_diffusion(prompt)
     api_key = ENV['STABLE_API_KEY']
-    response = HTTParty.post("https://api.stability.ai/v1/generation/stable-diffusion-xl-beta-v2-2-2/text-to-image",
+    response = HTTParty.post("https://api.stability.ai/v1/generation/stable-diffusion-v1-6/text-to-image",
                               headers: {
                                 'Content-Type' => 'application/json',
                                 'Accept' => 'application/json', 
